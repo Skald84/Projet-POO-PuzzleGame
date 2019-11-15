@@ -9,7 +9,7 @@ package MVC;
  *
  * @author et8ge
  */
-public abstract class Case {
+public class Case {
     
     private boolean caseLibre, caseSymbole;
     
