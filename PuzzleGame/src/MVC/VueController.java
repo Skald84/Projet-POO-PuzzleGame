@@ -33,9 +33,14 @@ public class VueController extends Application {
         MenuItem mi1 = new MenuItem();
         MenuItem mi2 = new MenuItem();
         MenuItem mi3 = new MenuItem();
+        
+        int longueurGrille, largeurGrille;
+        
                 
         
         GridPane grille = new GridPane();
+        grille.setPrefSize(300,300);
+        
         
         
         Button btn = new Button();
@@ -51,11 +56,12 @@ public class VueController extends Application {
         StackPane root = new StackPane();
         root.getChildren().add(btn);
         
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 600, 600);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
+        
     }
 
     /**

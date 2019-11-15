@@ -9,6 +9,7 @@ package MVC;
  *
  * @author et8ge
  */
+/*
 public class Grille {
     boolean resolu;
     int longueur, largeur;
@@ -25,3 +26,4 @@ public class Grille {
         
     }
 }
+*/

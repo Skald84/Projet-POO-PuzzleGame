@@ -11,8 +11,31 @@ package MVC;
  */
 public abstract class Case {
     
-    public Case(){
+    private boolean caseLibre, caseSymbole;
+    
+    public Case(boolean caseSymbole){
         
+        if(caseSymbole == true){
+            this.caseLibre = false;
+            this.caseSymbole = true;
+        } else {
+            this.caseLibre = true;
+            this.caseSymbole = false;
+        }     
     }
+    
+    public boolean getCaseLibre(){
+        return this.caseLibre;
+    }
+    
+    public boolean getCaseSymbole(){
+        return this.caseSymbole;
+    }
+    
+    public void setCaseLibre(boolean caseLibre){
+        this.caseLibre = caseLibre;
+    }
+    
+    
     
 }
