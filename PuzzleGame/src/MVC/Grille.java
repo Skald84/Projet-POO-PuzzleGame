@@ -9,21 +9,22 @@ package MVC;
  *
  * @author et8ge
  */
-/*
+
 public class Grille {
     boolean resolu;
-    int longueur, largeur;
-    public static Case[][] Grille1 = [0,0,0,0,0,0,0];
+    static int lo, la;
+    public static Case[][] PlateauJeu;
     
     
     public Grille(int lo, int la){
-        Case[][] Grille;
+        Grille.la = la;
+        Grille.lo = lo;
+        Case[][] Grille = null;
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
-                Case[i][j] = new Case...();
+               //TODO : instancier une case puis l'insérer à la grille (créer constructeur Case)
             }
         }
         
     }
 }
-*/

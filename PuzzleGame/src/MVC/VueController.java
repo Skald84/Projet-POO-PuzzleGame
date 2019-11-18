@@ -52,82 +52,84 @@ public class VueController extends Application {
         MenuItem mi2 = new MenuItem();
         MenuItem mi3 = new MenuItem();
         
-        int longueurGrille = 4, largeurGrille = 4;
-        
-                
-        
         GridPane grille = new GridPane();
         grille.setPrefSize(300,300);
         
+        // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
+        int longueurGrille = Grille.lo, largeurGrille = Grille.la;
+        
+        // création d'un tableau de conteneur d'image
         ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille];
         
-        
-        for (int column = 0; column < longueurGrille; column++) {
-            for (int row = 0; row < largeurGrille; row++) {
-                
-                final int fColumn = column;
-                final int fRow = row;
-                
-                ImageView imageView;
-                
-                if ((column == 0 && row == 0) || (column == 3 && row == 3)) {
-                    // symbole en début et fin de tableau
-                        //création d'un conteneur d'img + ajout image dedans
-                        imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
-                        Pane root = new Pane();
-                        root.getChildren().add(imageView);
-                        tabImageView[column][row] = imageView;
-                        grille.add(tabImageView[column][row], column, row);
-                } else {
+        // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
+            for (int column = 0; column < longueurGrille; column++) {
+                for (int row = 0; row < largeurGrille; row++) {
+
+                    final int fColumn = column;
+                    final int fRow = row;
+
+                    ImageView imageView;
+
+                    if ((column == 0 && row == 0) || (column == longueurGrille -1 && row == largeurGrille -1)) {
+                        
+                        // image symbole en début et fin de tableau
+                            //création d'un conteneur d'img + ajout image dedans
+                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
+                            Pane root = new Pane();
+                            root.getChildren().add(imageView);
+                            tabImageView[column][row] = imageView;
+                            grille.add(tabImageView[column][row], column, row);
+                    } else {
+
+                        //remplissage des autres cases par la même image vide
+                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/vide.png")));
+                            Pane root = new Pane();
+                            root.getChildren().add(imageView);
+                            tabImageView[column][row] = imageView;
+                            grille.add(tabImageView[column][row], column, row);
+                            
+                    }
                     
-                    //remplissage des case par la même image
-                    imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/vide.png")));
-                    Pane root = new Pane();
-                    root.getChildren().add(imageView);
-                    tabImageView[column][row] = imageView;
-                    grille.add(tabImageView[column][row], column, row);
+                    //TODO : instancier le plateau de jeu selon une grille prédéfinie (grille statque pour le moment)
+
+
+                    //Drag & Drop
+
+                        imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent event) {
+
+                                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                                ClipboardContent content = new ClipboardContent();       
+                                content.putString(""); // non utilisÃ© actuellement
+                                db.setContent(content);
+                                event.consume();
+                                m.startDD(fColumn, fRow);
+                            }
+                        });
+
+                        imageView.setOnDragEntered(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+
+                                m.parcoursDD(fColumn, fRow);
+                                event.consume();
+                            }
+                        });
+
+                        imageView.setOnDragDone(new EventHandler<DragEvent>() {
+                            public void handle(DragEvent event) {
+
+                                // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
+
+                                m.stopDD(fColumn, fRow);
+
+                            }
+                        });
+
+
+
                 }
-                
-                
-                
-                
-                //Drag & Drop
-                
-                    imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
-                        public void handle(MouseEvent event) {
 
-                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                            ClipboardContent content = new ClipboardContent();       
-                            content.putString(""); // non utilisÃ© actuellement
-                            db.setContent(content);
-                            event.consume();
-                            m.startDD(fColumn, fRow);
-                        }
-                    });
-
-                    imageView.setOnDragEntered(new EventHandler<DragEvent>() {
-                        public void handle(DragEvent event) {
-
-                            m.parcoursDD(fColumn, fRow);
-                            event.consume();
-                        }
-                    });
-
-                    imageView.setOnDragDone(new EventHandler<DragEvent>() {
-                        public void handle(DragEvent event) {
-
-                            // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
-
-                            m.stopDD(fColumn, fRow);
-
-                        }
-                    });
-                
-                
-                
             }
-            
-        }
         
       
               
@@ -159,6 +161,9 @@ public class VueController extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        // Création du plateau de jeu via objet statique de la classe Grille
+        Grille plateauJeu = new Grille(5,3);
         launch(args);
     }
     

@@ -7,8 +7,12 @@ package MVC;
 
 /**
  *
- * @author et8ge
+ * @author aymer
  */
-public class Case {  
+public class CaseSymbole extends Case{
+    
+    public CaseSymbole() {
+        super();
+    }
     
 }

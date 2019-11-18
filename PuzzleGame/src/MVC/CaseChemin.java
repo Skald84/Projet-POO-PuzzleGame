@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.util;
+package MVC;
 
 /**
  *
- * @author et8ge
+ * @author aymer
  */
-public class Array {
+public class CaseChemin extends Case{
     
 }

@@ -35,7 +35,7 @@ public class Model extends Observable {
     }
     
     public void parcoursDD(int c, int r) {
-        // TODO
+        // TODO : comment ordonner à la vue de changer l'image de la case survolée ?
         lastC = c;
         lastR = r;
         System.out.println("parcoursDD : " + c + "-" + r);
