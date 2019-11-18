@@ -24,6 +24,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -38,6 +41,10 @@ public class VueController extends Application {
         Model m = new Model();
         
         BorderPane border = new BorderPane();
+        Text affichage = new Text("Puzzle Game");
+        affichage.setFont(Font.font("Calibri", 30));
+        affichage.setFill(Color.RED);
+        border.setTop(affichage);
         
         MenuBar mb = new MenuBar();
         Menu menu = new Menu();
@@ -61,59 +68,76 @@ public class VueController extends Application {
                 final int fColumn = column;
                 final int fRow = row;
                 
-                //remplissage des case par la même image
+                ImageView imageView;
                 
-                ImageView imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/NO.png")));
-                Pane root = new Pane();
-                root.getChildren().add(imageView);
-                tabImageView[column][row] = imageView;
-                grille.add(tabImageView[column][row], column, row);
+                if ((column == 0 && row == 0) || (column == 3 && row == 3)) {
+                    // symbole en début et fin de tableau
+                        //création d'un conteneur d'img + ajout image dedans
+                        imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
+                        Pane root = new Pane();
+                        root.getChildren().add(imageView);
+                        tabImageView[column][row] = imageView;
+                        grille.add(tabImageView[column][row], column, row);
+                } else {
+                    
+                    //remplissage des case par la même image
+                    imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/vide.png")));
+                    Pane root = new Pane();
+                    root.getChildren().add(imageView);
+                    tabImageView[column][row] = imageView;
+                    grille.add(tabImageView[column][row], column, row);
+                }
+                
+                
                 
                 
                 //Drag & Drop
                 
-                imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
+                    imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
+                        public void handle(MouseEvent event) {
 
-                        Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                        ClipboardContent content = new ClipboardContent();       
-                        content.putString(""); // non utilisÃ© actuellement
-                        db.setContent(content);
-                        event.consume();
-                        m.startDD(fColumn, fRow);
-                    }
-                });
+                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                            ClipboardContent content = new ClipboardContent();       
+                            content.putString(""); // non utilisÃ© actuellement
+                            db.setContent(content);
+                            event.consume();
+                            m.startDD(fColumn, fRow);
+                        }
+                    });
 
-                imageView.setOnDragEntered(new EventHandler<DragEvent>() {
-                    public void handle(DragEvent event) {
-                        
-                        m.parcoursDD(fColumn, fRow);
-                        event.consume();
-                    }
-                });
-                
-                imageView.setOnDragDone(new EventHandler<DragEvent>() {
-                    public void handle(DragEvent event) {
-                        
-                        // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
-                        
-                        m.stopDD(fColumn, fRow);
-                        
-                    }
-                });
+                    imageView.setOnDragEntered(new EventHandler<DragEvent>() {
+                        public void handle(DragEvent event) {
+
+                            m.parcoursDD(fColumn, fRow);
+                            event.consume();
+                        }
+                    });
+
+                    imageView.setOnDragDone(new EventHandler<DragEvent>() {
+                        public void handle(DragEvent event) {
+
+                            // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
+
+                            m.stopDD(fColumn, fRow);
+
+                        }
+                    });
                 
                 
                 
             }
             
         }
+        
+      
               
              
         border.setCenter(grille);
+        grille.setGridLinesVisible(true);
         
         Scene scene = new Scene(border, 600, 600);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Puzzle Game !");
         primaryStage.setScene(scene);
         primaryStage.show();
         
@@ -124,13 +148,12 @@ public class VueController extends Application {
         
     }
     
-    public void changeImg(ImageView[][] tabImageView, int column, int row,GridPane grille){
-            ImageView imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
-                Pane root = new Pane();
-                root.getChildren().add(imageView);
-                tabImageView[column][row] = imageView;
-                grille.add(tabImageView[column][row], column, row);
-        }
+    public static void changeImg(){
+        ImageView imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/horizontal.png")));
+        
+    }
+    
+    
 
     /**
      * @param args the command line arguments

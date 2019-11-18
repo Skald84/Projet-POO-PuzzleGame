@@ -10,7 +10,7 @@ import java.util.Observable;
 
 /**
  *
- * @author fred
+ * @author et8ge
  */
 public class Model extends Observable {
     
@@ -26,9 +26,10 @@ public class Model extends Observable {
     public void stopDD(int c, int r) {
         // TODO
         
-        // mÃ©moriser le dernier objet renvoyÃ© par parcoursDD pour connaitre la case de relachement
+        // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
         
         System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
+        VueController.changeImg();
         setChanged();
         notifyObservers();
     }
