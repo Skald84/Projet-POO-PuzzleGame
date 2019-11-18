@@ -8,6 +8,8 @@ package MVC;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -22,8 +24,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -42,30 +46,58 @@ public class VueController extends Application {
         
         //Initialisation de la fenêtre principale
         BorderPane border = new BorderPane();
+        
+        HBox menuHaut = new HBox(100);
+        border.setTop(menuHaut);
+        
+        VBox menuGauche = new VBox(100);
+        border.setLeft(menuGauche);
+        
+        VBox menuDroit = new VBox(100);
+        border.setRight(menuDroit);
+        
+        HBox menuBas = new HBox(100);
+        border.setBottom(menuBas);
+        
+        //Initialisation du titre de la page
         Text affichage = new Text("Puzzle Game");
         affichage.setFont(Font.font("Calibri", 30));
         affichage.setFill(Color.RED);
         border.setTop(affichage);
+        BorderPane.setAlignment(affichage, Pos.CENTER);
         
-        //initialisation des barres de menu
-        MenuBar barreDeMenu = new MenuBar();
+        //initialisation du menu gauche
+        Button recommencerPuzzle = new Button("recommencer");
+        border.setLeft(recommencerPuzzle);
+        menuGauche.getChildren().add(recommencerPuzzle);
         
-        Menu menuJeu = new Menu("Jeu");
-        Menu menuOption = new Menu("Option");
-        Menu menuAide = new Menu("Aide");
+        Text choixDuNiveau = new Text("Choix du niveau :");
+        border.setLeft(choixDuNiveau);
+        menuGauche.getChildren().add(choixDuNiveau);
         
-        MenuItem choisirLeNiveau = new MenuItem("Choisir le niveau");
-        MenuItem recommencerNiveau = new MenuItem("Recommencer le niveau");
-        MenuItem quitter = new MenuItem("Quitter");
+        Button btnNiveau1 = new Button("Niveau 1");
+        border.setLeft(btnNiveau1);
+        menuGauche.getChildren().add(btnNiveau1);
         
-        barreDeMenu.getMenus().addAll(menuJeu, menuOption, menuAide);
-        menuJeu.getItems().addAll(choisirLeNiveau, recommencerNiveau, quitter);
+        Button btnNiveau2 = new Button("Niveau 2");
+        border.setLeft(btnNiveau2);
+        menuGauche.getChildren().add(btnNiveau2);
         
-        border.setTop(barreDeMenu);
+        Button btnNiveau3 = new Button("Niveau 3");
+        border.setLeft(btnNiveau3);
+        menuGauche.getChildren().add(btnNiveau3);
         
+        menuGauche.setSpacing(10);
+        menuGauche.setPadding(new Insets(15, 15, 15, 15));
+        border.setLeft(menuGauche);
         
+        //fin initialisation du menu gauche
+        
+        //initialisation de la grille
         GridPane grille = new GridPane();
-        grille.setPrefSize(300,300);
+        border.setCenter(grille);
+        BorderPane.setAlignment(grille, Pos.CENTER);
+        //grille.setPrefSize(300,300);
         
         // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
         int longueurGrille = Grille.lo, largeurGrille = Grille.la;
@@ -102,7 +134,7 @@ public class VueController extends Application {
                             
                     }
                     
-                    //TODO : instancier le plateau de jeu selon une grille prédéfinie (grille statque pour le moment)
+                    //TODO : instancier le plateau de jeu selon une grille prédéfinie (grille statique pour le moment)
 
 
                     //Drag & Drop
@@ -133,33 +165,23 @@ public class VueController extends Application {
                                 // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
 
                                 m.stopDD(fColumn, fRow);
-
                             }
-                        });
-
-
-
+                        }
+                    );
                 }
-
             }
-        
-      
-              
-             
+            
         border.setCenter(grille);
         grille.setGridLinesVisible(true);
         
-        Scene scene = new Scene(border, 600, 600);
+        Scene scene = new Scene(border, 800, 800);
         
         primaryStage.setTitle("Puzzle Game !");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
     /**
      *
      */
-    
-        
     }
     
     public static void changeImg(){
