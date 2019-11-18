@@ -5,10 +5,42 @@
  */
 package MVC;
 
+import java.util.Observable;
+
+
 /**
  *
- * @author et8ge
+ * @author fred
  */
-public class Model {
+public class Model extends Observable {
     
+    int lastC, lastR;
+    
+    public void startDD(int c, int r) {
+        // TODO
+        System.out.println("startDD : " + c + "-" + r);
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void stopDD(int c, int r) {
+        // TODO
+        
+        // mÃ©moriser le dernier objet renvoyÃ© par parcoursDD pour connaitre la case de relachement
+        
+        System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
+        setChanged();
+        notifyObservers();
+    }
+    
+    public void parcoursDD(int c, int r) {
+        // TODO
+        lastC = c;
+        lastR = r;
+        System.out.println("parcoursDD : " + c + "-" + r);
+        setChanged();
+        notifyObservers();
+    }
+   
+
 }
