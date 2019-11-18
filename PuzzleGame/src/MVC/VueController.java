@@ -40,17 +40,29 @@ public class VueController extends Application {
         
         Model m = new Model();
         
+        //Initialisation de la fenêtre principale
         BorderPane border = new BorderPane();
         Text affichage = new Text("Puzzle Game");
         affichage.setFont(Font.font("Calibri", 30));
         affichage.setFill(Color.RED);
         border.setTop(affichage);
         
-        MenuBar mb = new MenuBar();
-        Menu menu = new Menu();
-        MenuItem mi1 = new MenuItem();
-        MenuItem mi2 = new MenuItem();
-        MenuItem mi3 = new MenuItem();
+        //initialisation des barres de menu
+        MenuBar barreDeMenu = new MenuBar();
+        
+        Menu menuJeu = new Menu("Jeu");
+        Menu menuOption = new Menu("Option");
+        Menu menuAide = new Menu("Aide");
+        
+        MenuItem choisirLeNiveau = new MenuItem("Choisir le niveau");
+        MenuItem recommencerNiveau = new MenuItem("Recommencer le niveau");
+        MenuItem quitter = new MenuItem("Quitter");
+        
+        barreDeMenu.getMenus().addAll(menuJeu, menuOption, menuAide);
+        menuJeu.getItems().addAll(choisirLeNiveau, recommencerNiveau, quitter);
+        
+        border.setTop(barreDeMenu);
+        
         
         GridPane grille = new GridPane();
         grille.setPrefSize(300,300);
