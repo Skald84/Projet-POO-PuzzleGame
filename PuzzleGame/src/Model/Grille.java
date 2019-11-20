@@ -23,9 +23,9 @@ public class Grille {
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
                 if ((i == 0 && j == 0) || (i == lo-1 && j == la-1)) {
-                    //this.plateauJeu[i][j] = new CaseSymbole(i,j);
+                    this.plateauJeu[i][j] = new CaseSymbole(i,j);
                 } else {
-                    //this.plateauJeu[i][j] = new CaseChemin(i,j);
+                    this.plateauJeu[i][j] = new CaseChemin(i,j);
                 }
             }
         }

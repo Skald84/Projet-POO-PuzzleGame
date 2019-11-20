@@ -15,11 +15,21 @@ public class CaseChemin extends Case{
         LIBRE, NE, EN, NS, SN, NO, ON, ES, SE, EO, OE, SO, OS
     }
     
-    private caseImg c;
+    private caseImg c = caseImg.LIBRE;
     
     public CaseChemin(int cX, int rY) {
         super(cX, rY);
     }
+    
+    public void changeImage(){
+        
+        //
+        
+        setChanged();
+        notifyObservers();
+    }
+    
+    
     
     
     

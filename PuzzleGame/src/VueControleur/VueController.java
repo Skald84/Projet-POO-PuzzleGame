@@ -7,6 +7,8 @@ package VueControleur;
 
 import Model.Grille;
 import Model.Model;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,7 +41,7 @@ import javafx.stage.Stage;
  *
  * @author et8ge
  */
-public class VueController extends Application {
+public class VueController extends Application implements Observer{
 
     
     @Override
@@ -47,7 +49,7 @@ public class VueController extends Application {
         
         Model m = new Model();
         
-        m.init();
+    
         
         //Initialisation de la fenêtre principale
         BorderPane border = new BorderPane();
@@ -134,7 +136,7 @@ public class VueController extends Application {
                     } else {
 
                         //remplissage des autres cases par la même image vide
-                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/vide.png")));
+                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                             Pane root = new Pane();
                             root.getChildren().add(imageView);
                             tabImageView[column][row] = imageView;
@@ -201,9 +203,15 @@ public class VueController extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+         Grille plateauJeu = new Grille(5,3);
         // Création du plateau de jeu via objet statique de la classe Grille
         launch(args);
+        
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

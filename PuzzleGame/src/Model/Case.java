@@ -5,11 +5,13 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
  * @author et8ge
  */
-public class Case {
+public class Case extends Observable{
         
     public int x;
     public int y;
@@ -21,6 +23,6 @@ public class Case {
         this.x = cX;
         this.y = rY;
         this.libre = true;
-    }
+    }    
     
 }
