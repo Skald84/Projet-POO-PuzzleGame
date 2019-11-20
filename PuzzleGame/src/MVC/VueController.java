@@ -179,6 +179,7 @@ public class VueController extends Application {
         primaryStage.setTitle("Puzzle Game !");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);//ne permet plus de redimensionner la fenêtre
+        primaryStage.centerOnScreen();//affiche la fenêtre au centre de l'écran
         primaryStage.show();
     /**
      *
