@@ -10,16 +10,22 @@ package Model;
  * @author aymer
  */
 public class CaseChemin extends Case{
-    
+
     private enum caseImg {
         LIBRE, NE, EN, NS, SN, NO, ON, ES, SE, EO, OE, SO, OS
     }
     
-    caseImg c;
+    private caseImg c;
     
-    public CaseChemin(caseImg c) {
-        super();
+    public CaseChemin(int cX, int rY) {
+        super(cX, rY);
     }
+    
+    
+    
+    
+    
+   
     
     private String imageDe(caseImg c){
         if(c == caseImg.LIBRE) return("/images/LIBRE.png");

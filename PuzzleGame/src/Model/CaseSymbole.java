@@ -15,11 +15,19 @@ public class CaseSymbole extends Case{
         S1, TRIANGLE, CARRE, CERCLE
     }
     
-    symbole s;
     
-    public CaseSymbole(symbole s) {
-        super();
+    /**
+     *
+     * @param x
+     * @param y
+     * @param s
+     */
+    public CaseSymbole(int x, int y) {
+      super(x, y);
+      //this.symbole = s;
     }
+    
+    private symbole s;
     
     private String imageDe(symbole s){
         switch (s){

@@ -21,9 +21,10 @@ public class Chemin extends LinkedList<Case>{
     }
     
     @Override
-    public void add(int index, Case element){
-        super.add(index, element);
+    public void addLast(Case element){
+        super.add(element);
     }
+    
     
     public void affiche(){
         while (it.hasNext()){

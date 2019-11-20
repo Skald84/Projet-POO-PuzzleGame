@@ -11,7 +11,7 @@ package Model;
  */
 
 public class Grille {
-    boolean resolu;
+    
     static int lo, la;
     public static Case[][] PlateauJeu;
     
@@ -19,13 +19,21 @@ public class Grille {
     public Grille(int lo, int la){
         Grille.la = la;
         Grille.lo = lo;
-        Case[][] Grille = null;
+       
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
-               //TODO : instancier une case puis l'insérer à la grille (créer constructeur Case)
+                if ((i == 0 && j == 0) || (i == lo-1 && j == la-1)) {
+                    Grille.PlateauJeu[i][j] = new CaseSymbole(i,j);
+                } else {
+                    Grille.PlateauJeu[i][j] = new CaseChemin(i,j);
+                }
             }
         }
         
+    }
+    
+    public boolean puzzleResolu(){
+        return false;
     }
     
     public static int getLo(){

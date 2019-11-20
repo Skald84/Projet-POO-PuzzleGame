@@ -21,6 +21,8 @@ public class Model extends Observable {
         // TODO
         Chemin chemin = new Chemin();
         
+        // si case symbole ok, sinon c'est mort  ==> on ne peut cliquer que sur des cases symbole instanceof()
+        
         System.out.println("startDD : " + c + "-" + r);
         setChanged();
         notifyObservers();
@@ -40,7 +42,7 @@ public class Model extends Observable {
         // TODO : comment ordonner à la vue de changer l'image de la case survolée ?
         lastC = c;
         lastR = r;
-       
+        
         System.out.println("parcoursDD : " + c + "-" + r);
         setChanged();
         notifyObservers();
