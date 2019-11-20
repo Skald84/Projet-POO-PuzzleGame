@@ -9,17 +9,6 @@ package MVC;
  *
  * @author et8ge
  */
-public class Case {
-    
-    public int x;
-    public int y;
-    public boolean libre;
-    
-    
-    public Case(int cX, int rY, boolean l){
-        this.x = cX;
-        this.y = rY;
-        this.libre = l;
-    }
+public class Symbole {
     
 }
