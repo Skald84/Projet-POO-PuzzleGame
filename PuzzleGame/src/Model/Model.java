@@ -48,5 +48,8 @@ public class Model extends Observable {
         notifyObservers();
     }
    
-
+    public void init(){
+        Grille plateauJeu = new Grille(5,3);
+    }
+ 
 }

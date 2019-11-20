@@ -47,6 +47,8 @@ public class VueController extends Application {
         
         Model m = new Model();
         
+        m.init();
+        
         //Initialisation de la fenêtre principale
         BorderPane border = new BorderPane();
         
@@ -105,8 +107,8 @@ public class VueController extends Application {
         
         
         // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
-        int longueurGrille = Grille.getLo();
-        int largeurGrille = Grille.getLa();
+        int longueurGrille = 5; // a modifier
+        int largeurGrille = 5; // rendre dynamique
         
         // création d'un tableau de conteneur d'image
         ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille]; // EST-CE QUE CA NE SERAI PAS MIEUX DE FAIRE UN TABLEAU DE BOUTON[][]? OU CHAQUE BOUTON CONTIENT UNE IMG ?
@@ -201,7 +203,6 @@ public class VueController extends Application {
     public static void main(String[] args) {
         
         // Création du plateau de jeu via objet statique de la classe Grille
-        Grille plateauJeu = new Grille(5,3);
         launch(args);
     }
     

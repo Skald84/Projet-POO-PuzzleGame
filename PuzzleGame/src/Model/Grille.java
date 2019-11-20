@@ -12,20 +12,20 @@ package Model;
 
 public class Grille {
     
-    static int lo, la;
-    public static Case[][] PlateauJeu;
+    int lo, la;
+    public Case[][] plateauJeu;
     
     
     public Grille(int lo, int la){
-        Grille.la = la;
-        Grille.lo = lo;
-       
+        this.la = la;
+        this.lo = lo;
+        
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
                 if ((i == 0 && j == 0) || (i == lo-1 && j == la-1)) {
-                    Grille.PlateauJeu[i][j] = new CaseSymbole(i,j);
+                    //this.plateauJeu[i][j] = new CaseSymbole(i,j);
                 } else {
-                    Grille.PlateauJeu[i][j] = new CaseChemin(i,j);
+                    //this.plateauJeu[i][j] = new CaseChemin(i,j);
                 }
             }
         }
@@ -36,11 +36,11 @@ public class Grille {
         return false;
     }
     
-    public static int getLo(){
-        return Grille.lo;
+    public int getLo(){
+        return this.lo;
     }
     
-    public static int getLa(){
-        return Grille.la;
+    public int getLa(){
+        return this.la;
     }
 }
