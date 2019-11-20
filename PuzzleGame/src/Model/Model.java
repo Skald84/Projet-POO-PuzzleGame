@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MVC;
+package Model;
 
+import VueControleur.VueController;
 import java.util.Observable;
 
 
@@ -18,6 +19,8 @@ public class Model extends Observable {
     
     public void startDD(int c, int r) {
         // TODO
+        Chemin chemin = new Chemin();
+        
         System.out.println("startDD : " + c + "-" + r);
         setChanged();
         notifyObservers();
@@ -29,7 +32,6 @@ public class Model extends Observable {
         // mémoriser le dernier objet renvoyé par parcoursDD pour connaitre la case de relachement
         
         System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
-        VueController.changeImg();
         setChanged();
         notifyObservers();
     }
@@ -38,6 +40,7 @@ public class Model extends Observable {
         // TODO : comment ordonner à la vue de changer l'image de la case survolée ?
         lastC = c;
         lastR = r;
+       
         System.out.println("parcoursDD : " + c + "-" + r);
         setChanged();
         notifyObservers();

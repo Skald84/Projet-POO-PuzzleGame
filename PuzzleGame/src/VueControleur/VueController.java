@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MVC;
+package VueControleur;
 
+import Model.Grille;
+import Model.Model;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,6 +40,7 @@ import javafx.stage.Stage;
  * @author et8ge
  */
 public class VueController extends Application {
+
     
     @Override
     public void start(Stage primaryStage) {
@@ -100,7 +103,8 @@ public class VueController extends Application {
         //grille.setPrefSize(300,300);
         
         // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
-        int longueurGrille = Grille.lo, largeurGrille = Grille.la;
+        int longueurGrille = Grille.getLo();
+        int largeurGrille = Grille.getLa();
         
         // création d'un tableau de conteneur d'image
         ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille];
@@ -141,7 +145,6 @@ public class VueController extends Application {
 
                         imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
                             public void handle(MouseEvent event) {
-
                                 Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
                                 ClipboardContent content = new ClipboardContent();       
                                 content.putString(""); // non utilisÃ© actuellement
@@ -153,7 +156,6 @@ public class VueController extends Application {
 
                         imageView.setOnDragEntered(new EventHandler<DragEvent>() {
                             public void handle(DragEvent event) {
-
                                 m.parcoursDD(fColumn, fRow);
                                 event.consume();
                             }
@@ -184,10 +186,7 @@ public class VueController extends Application {
      */
     }
     
-    public static void changeImg(){
-        ImageView imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/horizontal.png")));
-        
-    }
+    
     
     
 

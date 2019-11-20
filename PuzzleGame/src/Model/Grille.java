@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MVC;
+package Model;
 
 /**
  *
@@ -26,5 +26,13 @@ public class Grille {
             }
         }
         
+    }
+    
+    public static int getLo(){
+        return Grille.lo;
+    }
+    
+    public static int getLa(){
+        return Grille.la;
     }
 }

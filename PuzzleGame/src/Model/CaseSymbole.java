@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MVC;
+package Model;
 
 /**
  *
- * @author et8ge
+ * @author aymer
  */
-public class Chemin {
+public class CaseSymbole extends Case{
+    
+    public CaseSymbole() {
+        super();
+    }
     
 }
