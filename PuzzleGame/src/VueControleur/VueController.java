@@ -102,18 +102,20 @@ public class VueController extends Application {
         BorderPane.setAlignment(grille, Pos.CENTER);
         //grille.setPrefSize(300,300);
         
+        
+        
         // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
         int longueurGrille = Grille.getLo();
         int largeurGrille = Grille.getLa();
         
         // création d'un tableau de conteneur d'image
-        ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille];
+        ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille]; // EST-CE QUE CA NE SERAI PAS MIEUX DE FAIRE UN TABLEAU DE BOUTON[][]? OU CHAQUE BOUTON CONTIENT UNE IMG ?
         
         // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
             for (int column = 0; column < longueurGrille; column++) {
                 for (int row = 0; row < largeurGrille; row++) {
 
-                    final int fColumn = column;
+                    final int fColumn = column;//FINAL DANS UNE BOUCLE ??
                     final int fRow = row;
 
                     ImageView imageView;
@@ -123,7 +125,7 @@ public class VueController extends Application {
                         // image symbole en début et fin de tableau
                             //création d'un conteneur d'img + ajout image dedans
                             imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
-                            Pane root = new Pane();
+                            Pane root = new Pane();//UN NOUVEAU PANEL ?
                             root.getChildren().add(imageView);
                             tabImageView[column][row] = imageView;
                             grille.add(tabImageView[column][row], column, row);
@@ -165,6 +167,7 @@ public class VueController extends Application {
                             public void handle(DragEvent event) {
 
                                 // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
+                                //|->??
 
                                 m.stopDD(fColumn, fRow);
                             }
@@ -180,6 +183,8 @@ public class VueController extends Application {
         
         primaryStage.setTitle("Puzzle Game !");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);//ne permet plus de redimensionner la fenêtre
+        primaryStage.centerOnScreen();//affiche la fenêtre au centre de l'écran
         primaryStage.show();
     /**
      *

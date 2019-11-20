@@ -3,23 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package MVC;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author et8ge
  */
-public class Case {
+public class Chemin {
     
-    public int x;
-    public int y;
-    public boolean libre;
+    public ArrayList<Case> chemin;
     
+    public Chemin(Case caseDebut){
+        chemin.add(caseDebut);
+    }
     
-    public Case(int cX, int rY, boolean l){
-        this.x = cX;
-        this.y = rY;
-        this.libre = l;
+    public void ajouterAuChemin(Case c){
+        chemin.add(c);
     }
     
 }
