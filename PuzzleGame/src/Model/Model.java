@@ -20,9 +20,6 @@ public class Model extends Observable {
     private Chemin chemin;
     private Grille grille;
     
-    
-    
-    
     /**
      * Crée un objet grille
      * @param largeur
@@ -104,7 +101,7 @@ public class Model extends Observable {
             }
         } else { // si première case déjà présente
             if (this.grille.plateauJeu[c][r].getLibre() == true ){ // si case libre
-                if((this.grille.plateauJeu[c][r].getX() == chemin.getLast().getX()) ||(this.grille.plateauJeu[c][r].getY() == chemin.getLast().getY())){ // verifie que les cases soient voisines
+                if(this.grille.plateauJeu[c][r].estVoisinDe(chemin.getLast())){ // verifie que les cases soient voisines
                     this.chemin.addLast(this.grille.plateauJeu[c][r]); // Ajoute la case dans le chemin
                     chemin.affiche();
                 } else{
@@ -116,7 +113,5 @@ public class Model extends Observable {
                 System.out.println("case non libre");
             }  
         }
-        
     }
-   
 }

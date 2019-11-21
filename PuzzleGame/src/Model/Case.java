@@ -13,8 +13,8 @@ import java.util.Observable;
  */
 public class Case extends Observable{
         
-    public int x;
-    public int y;
+    public final int x;
+    public final int y;
     
     public boolean libre;
     
@@ -41,6 +41,15 @@ public class Case extends Observable{
         this.libre = libre;
     }
     
-    
-    
+    protected boolean estVoisinDe(Case c){
+        if (this.getX() == c.getX()) {
+            if(this.getY() == c.getY()-1 || this.getY() == c.getY()+1) return(true);
+            else return(false);
+        }
+        else if (this.getY() == c.getY()){
+            if(this.getX() == c.getX()-1 || this.getX() == c.getX()+1) return(true);
+            else return(false);
+        }
+        else return(true);
+    }
 }
