@@ -5,12 +5,14 @@
  */
 package Model;
 
+import java.util.Observable;
+
 /**
  *
  * @author et8ge
  */
 
-public class Grille {
+public class Grille extends Observable{
     
     int lo, la;
     public Case[][] plateauJeu;
@@ -20,6 +22,8 @@ public class Grille {
         this.la = la;
         this.lo = lo;
         
+        this.plateauJeu = new Case[lo][la];
+        
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
                 if ((i == 0 && j == 0) || (i == lo-1 && j == la-1)) {
@@ -27,10 +31,12 @@ public class Grille {
                 } else {
                     this.plateauJeu[i][j] = new CaseChemin(i,j);
                 }
+                
+                
             }
         }
-        
     }
+    
     
     public boolean puzzleResolu(){
         return false;

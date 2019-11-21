@@ -24,6 +24,7 @@ public class CaseSymbole extends Case{
      */
     public CaseSymbole(int x, int y) {
       super(x, y);
+      System.out.println("new CaseSymbole");
       //this.symbole = s;
     }
     

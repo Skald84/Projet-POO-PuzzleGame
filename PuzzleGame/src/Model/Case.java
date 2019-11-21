@@ -24,5 +24,23 @@ public class Case extends Observable{
         this.y = rY;
         this.libre = true;
     }    
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public boolean getLibre() {
+        return libre;
+    }
+
+    public void setLibre(boolean libre) {
+        this.libre = libre;
+    }
+    
+    
     
 }

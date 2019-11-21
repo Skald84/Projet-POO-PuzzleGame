@@ -19,6 +19,7 @@ public class CaseChemin extends Case{
     
     public CaseChemin(int cX, int rY) {
         super(cX, rY);
+        System.out.println("new CaseChemin");
     }
     
     public void changeImage(){

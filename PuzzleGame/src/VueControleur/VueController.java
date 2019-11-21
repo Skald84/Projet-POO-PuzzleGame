@@ -47,8 +47,15 @@ public class VueController extends Application implements Observer{
     @Override
     public void start(Stage primaryStage) {
         
+        //Instanciation du modèle
         Model m = new Model();
         
+        m.creerGrille(5,5); // crée Grille via modele
+        m.creerChemin(); // crée chemin vide via modèle
+        
+        // Obervation du modèle par la vue
+        m.addObserver(this);
+             
     
         
         //Initialisation de la fenêtre principale
@@ -203,7 +210,6 @@ public class VueController extends Application implements Observer{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         Grille plateauJeu = new Grille(5,3);
         // Création du plateau de jeu via objet statique de la classe Grille
         launch(args);
         
