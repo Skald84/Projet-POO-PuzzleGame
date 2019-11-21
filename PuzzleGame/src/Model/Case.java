@@ -41,8 +41,15 @@ public class Case extends Observable{
         this.libre = libre;
     }
     
-    public boolean estVoisinDe(Case c){
-        if (this.getX() == c.getX() || this.getY() == c.getY()) return(true);
-        else return(false);
+    protected boolean estVoisinDe(Case c){
+        if (this.getX() == c.getX()) {
+            if(this.getY() == c.getY()-1 || this.getY() == c.getY()+1) return(true);
+            else return(false);
+        }
+        else if (this.getY() == c.getY()){
+            if(this.getX() == c.getX()-1 || this.getX() == c.getX()+1) return(true);
+            else return(false);
+        }
+        else return(true);
     }
 }
