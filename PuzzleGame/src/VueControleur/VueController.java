@@ -120,7 +120,7 @@ public class VueController extends Application implements Observer{
         int largeurGrille = 5; // rendre dynamique
         
         // création d'un tableau de conteneur d'image
-        ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille]; // EST-CE QUE CA NE SERAI PAS MIEUX DE FAIRE UN TABLEAU DE BOUTON[][]? OU CHAQUE BOUTON CONTIENT UNE IMG ?
+        ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille];
         
         // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
             for (int column = 0; column < longueurGrille; column++) {
@@ -130,7 +130,7 @@ public class VueController extends Application implements Observer{
                     final int fRow = row;
 
                     ImageView imageView;
-
+                    
                     if ((column == 0 && row == 0) || (column == longueurGrille -1 && row == largeurGrille -1)) {
                         
                         // image symbole en début et fin de tableau

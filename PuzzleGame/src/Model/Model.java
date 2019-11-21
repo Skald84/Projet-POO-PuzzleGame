@@ -20,9 +20,6 @@ public class Model extends Observable {
     private Chemin chemin;
     private Grille grille;
     
-    
-    
-    
     /**
      * Crée un objet grille
      * @param largeur

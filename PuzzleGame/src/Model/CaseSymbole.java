@@ -44,5 +44,4 @@ public class CaseSymbole extends Case{
                 return("/images/ERREUR.png");
         }
     }
-    
 }
