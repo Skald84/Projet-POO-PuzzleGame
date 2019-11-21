@@ -44,9 +44,7 @@ public class Chemin extends LinkedList<Case>{
         for (int i = 0; i < this.size(); i++) {
 			this.get(i).setLibre(true);
 		}
-        super.clear();
-       
-                
+        super.clear(); 
     }
    
     

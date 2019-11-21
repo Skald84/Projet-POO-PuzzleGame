@@ -94,7 +94,7 @@ public class Model extends Observable {
         System.out.println("parcoursDD : " + c + "-" + r);
         
         
-        if (chemin.isEmpty()) { // si chemin non vide
+        if (chemin.isEmpty()) { // si chemin vide
             if (this.grille.plateauJeu[c][r] instanceof CaseSymbole) { // verif que 1ere case soit un symbole
                 this.chemin.addLast(this.grille.plateauJeu[c][r]); // Ajoute la case dans le chemin
                 this.grille.plateauJeu[c][r].setLibre(false); // rend la non libre
