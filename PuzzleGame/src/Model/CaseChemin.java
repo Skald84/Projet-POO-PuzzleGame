@@ -29,15 +29,7 @@ public class CaseChemin extends Case{
         setChanged();
         notifyObservers();
     }
-    
-    
-    
-    
-    
-    
-    
-   
-    
+
     private String imageDe(caseImg c){
         if(c == caseImg.LIBRE) return("/images/LIBRE.png");
         else if (c == caseImg.NE || c == caseImg.EN) return("/images/NE.png");
