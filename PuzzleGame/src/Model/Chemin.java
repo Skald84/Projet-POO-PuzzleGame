@@ -29,12 +29,11 @@ public class Chemin extends LinkedList<Case>{
     
     
     public void affiche(){
-        
         System.out.println("debut liste:");
-       for (int i = 0; i < this.size(); i++) {
-			System.out.println(this.get(i));
-		}
-      System.out.println("fin liste:");          
+        for (int i = 0; i < this.size(); i++) {
+            System.out.println(this.get(i));
+        }
+        System.out.println("fin liste:");          
     }
     
     /**
@@ -42,8 +41,8 @@ public class Chemin extends LinkedList<Case>{
      */
     public void setFreeAllCasesAndClear(){
         for (int i = 0; i < this.size(); i++) {
-			this.get(i).setLibre(true);
-		}
+            this.get(i).setLibre(true);
+        }
         super.clear();
     }    
    

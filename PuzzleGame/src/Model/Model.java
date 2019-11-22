@@ -27,10 +27,10 @@ public class Model extends Observable {
      */
     public void creerGrille(int largeur, int longueur){
         this.grille = new Grille(largeur, longueur);
+        
         for(int i =0 ; i < longueur ; i++){
             for(int j =0 ; j < largeur ; j++){
-               
-                    System.out.println(this.grille.plateauJeu[i][j]);
+                System.out.println(this.grille.plateauJeu[i][j]);
             }
         }
     }
@@ -70,13 +70,12 @@ public class Model extends Observable {
                 chemin.affiche();
             }
         } else{
-            System.out.println("chemin non valide");
+            System.out.println("chemin non valide (chemin vide)");
                 chemin.setFreeAllCasesAndClear();
                 chemin.affiche();
         }
         
         System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
-        
     }
     
     /**
@@ -89,7 +88,6 @@ public class Model extends Observable {
         lastC = c;
         lastR = r;
         System.out.println("parcoursDD : " + c + "-" + r);
-        
         
         if (chemin.isEmpty()) { // si chemin vide
             if (this.grille.plateauJeu[c][r] instanceof CaseSymbole) { // verif que 1ere case soit un symbole
@@ -111,7 +109,11 @@ public class Model extends Observable {
             } else {
                 chemin.setFreeAllCasesAndClear(); // vide le chemin
                 System.out.println("case non libre");
-            }  
+            }
+            
+            Case ca = new Case(c, r);
+            setChanged();
+            notifyObservers(ca);
         }
     }
 }

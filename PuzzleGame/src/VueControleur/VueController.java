@@ -5,6 +5,7 @@
  */
 package VueControleur;
 
+import Model.Case;
 import Model.Grille;
 import Model.Model;
 import java.util.Observable;
@@ -43,20 +44,19 @@ import javafx.stage.Stage;
  */
 public class VueController extends Application implements Observer{
 
+    GridPane grille;
+    ImageView[][] tabImageView;
     
     @Override
     public void start(Stage primaryStage) {
         
         //Instanciation du modèle
         Model m = new Model();
+        m.addObserver(this); // Obervation du modèle par la vue
         
         m.creerGrille(5,5); // crée Grille via modele
         m.creerChemin(); // crée chemin vide via modèle
-        
-        // Obervation du modèle par la vue
-        m.addObserver(this);
              
-    
         
         //Initialisation de la fenêtre principale
         BorderPane border = new BorderPane();
@@ -73,6 +73,7 @@ public class VueController extends Application implements Observer{
         HBox menuBas = new HBox(100);
         border.setBottom(menuBas);
         
+        /*
         //Initialisation du titre de la page
         Text affichage = new Text("Puzzle Game");
         affichage.setFont(Font.font("Calibri", 30));
@@ -106,9 +107,10 @@ public class VueController extends Application implements Observer{
         border.setLeft(menuGauche);
         
         //fin initialisation du menu gauche
+        */
         
         //initialisation de la grille
-        GridPane grille = new GridPane();
+        grille = new GridPane();
         border.setCenter(grille);
         BorderPane.setAlignment(grille, Pos.CENTER);
         //grille.setPrefSize(300,300);
@@ -120,13 +122,13 @@ public class VueController extends Application implements Observer{
         int largeurGrille = 5; // rendre dynamique
         
         // création d'un tableau de conteneur d'image
-        ImageView[][] tabImageView = new ImageView[longueurGrille][largeurGrille];
+        tabImageView = new ImageView[longueurGrille][largeurGrille];
         
         // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
             for (int column = 0; column < longueurGrille; column++) {
                 for (int row = 0; row < largeurGrille; row++) {
 
-                    final int fColumn = column;//FINAL DANS UNE BOUCLE ??
+                    final int fColumn = column;
                     final int fRow = row;
 
                     ImageView imageView;
@@ -136,16 +138,16 @@ public class VueController extends Application implements Observer{
                         // image symbole en début et fin de tableau
                             //création d'un conteneur d'img + ajout image dedans
                             imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
-                            Pane root = new Pane();//UN NOUVEAU PANEL ?
-                            root.getChildren().add(imageView);
+                            //Pane root = new Pane();//UN NOUVEAU PANEL ?
+                            //root.getChildren().add(imageView);
                             tabImageView[column][row] = imageView;
                             grille.add(tabImageView[column][row], column, row);
                     } else {
 
                         //remplissage des autres cases par la même image vide
                             imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
-                            Pane root = new Pane();
-                            root.getChildren().add(imageView);
+                            //Pane root = new Pane();
+                            //root.getChildren().add(imageView);
                             tabImageView[column][row] = imageView;
                             grille.add(tabImageView[column][row], column, row);
                             
@@ -202,22 +204,27 @@ public class VueController extends Application implements Observer{
      */
     }
     
-    
-    
-    
-
+  
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Création du plateau de jeu via objet statique de la classe Grille
         launch(args);
-        
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        //on récupère l'argument ("arg") case ("o" étant l'observable, ici "model"), qu'on transforme en case, puis on récupère ses coordonnées
+        Case c = (Case)arg;
+        int x = c.getX();
+        int y = c.getY();
+        
+        //création de l'image adéquate (pour l'instant une image standard "ERREUR")
+        // Puis on place l'image sur la case concernée
+        ImageView imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/ERREUR.png")));
+        tabImageView[x][y] = imageView;
+        grille.add(tabImageView[x][y], x, y);
     }
     
 }

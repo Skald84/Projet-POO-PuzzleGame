@@ -31,14 +31,16 @@ public class Grille extends Observable{
                 } else {
                     this.plateauJeu[i][j] = new CaseChemin(i,j);
                 }
-                
-                
             }
         }
     }
     
-    
     public boolean puzzleResolu(){
+        for(int i =0 ; i < lo ; i++){
+            for(int j =0 ; j < la ; j++){
+                if(this.plateauJeu[i][j].libre == false) return(true);
+            }
+        }
         return false;
     }
     
