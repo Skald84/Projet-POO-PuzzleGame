@@ -192,7 +192,7 @@ public class VueController extends Application implements Observer{
         border.setCenter(grille);
         grille.setGridLinesVisible(true);
         
-        Scene scene = new Scene(border, 800, 800);
+        Scene scene = new Scene(border, 500, 500);
         
         primaryStage.setTitle("Puzzle Game !");
         primaryStage.setScene(scene);
@@ -216,15 +216,17 @@ public class VueController extends Application implements Observer{
     public void update(Observable o, Object arg) {
         
         //on récupère l'argument ("arg") case ("o" étant l'observable, ici "model"), qu'on transforme en case, puis on récupère ses coordonnées
-        Case c = (Case)arg;
+        System.out.println("maj de " + arg);
+        Case c = (Case) arg;
         int x = c.getX();
         int y = c.getY();
+        System.out.println("maj de " + c);
         
-        //création de l'image adéquate (pour l'instant une image standard "ERREUR")
-        // Puis on place l'image sur la case concernée
-        ImageView imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/ERREUR.png")));
-        tabImageView[x][y] = imageView;
-        grille.add(tabImageView[x][y], x, y);
+        String pathCaseImg = c.getImage();
+        System.out.println("image de arg : " + pathCaseImg);
+        
+
+        tabImageView[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
     }
     
 }

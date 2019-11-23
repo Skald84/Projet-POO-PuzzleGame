@@ -28,8 +28,8 @@ public class Model extends Observable {
     public void creerGrille(int largeur, int longueur){
         this.grille = new Grille(largeur, longueur);
         
-        for(int i =0 ; i < longueur ; i++){
-            for(int j =0 ; j < largeur ; j++){
+        for(int i = 0 ; i < longueur ; i++){
+            for(int j = 0 ; j < largeur ; j++){
                 System.out.println(this.grille.plateauJeu[i][j]);
             }
         }
@@ -87,33 +87,50 @@ public class Model extends Observable {
         // TODO : comment ordonner à la vue de changer l'image de la case survolée ?
         lastC = c;
         lastR = r;
+        Case casePointee = this.grille.plateauJeu[c][r];
+        
         System.out.println("parcoursDD : " + c + "-" + r);
         
         if (chemin.isEmpty()) { // si chemin vide
-            if (this.grille.plateauJeu[c][r] instanceof CaseSymbole) { // verif que 1ere case soit un symbole
-                this.chemin.addLast(this.grille.plateauJeu[c][r]); // Ajoute la case dans le chemin
-                this.grille.plateauJeu[c][r].setLibre(false); // rend la non libre
+            if (casePointee instanceof CaseSymbole) { // Si c'est une case symbole
+                this.chemin.addLast(casePointee); // Ajoute la case dans le chemin
                 chemin.affiche();
-            } else {
-                System.out.println("ne commence pas par un symbole");
-            }
-        } else { // si première case déjà présente
-            if (this.grille.plateauJeu[c][r].getLibre() == true ){ // si case libre
-                if(this.grille.plateauJeu[c][r].estVoisinDe(chemin.getLast())){ // verifie que les cases soient voisines
-                    this.chemin.addLast(this.grille.plateauJeu[c][r]); // Ajoute la case dans le chemin
-                    chemin.affiche();
-                } else{
-                     chemin.setFreeAllCasesAndClear(); // vide le chemin et rend libre les cases
-                     System.out.println("pas voisin !");
-                } 
-            } else {
-                chemin.setFreeAllCasesAndClear(); // vide le chemin
-                System.out.println("case non libre");
             }
             
-            Case ca = new Case(c, r);
+            else {
+                System.out.println("Ne commence pas par un symbole");
+            }
+        }
+        
+        else { // Si le chemin n'est pas vide
+            if (casePointee.getLibre() == true ){ // si la case libre
+                
+                if(casePointee.estVoisinDe(chemin.getLast())){ // Si la case pointée est voisine à la case précédemment pointée
+                    
+                    //chemin.getLast().setVoisin1(casePointee);//détermine le voisin de la case pointée
+                    //casePointee.setVoisin1(chemin.getLast());// détermine le voisin de la case précédente
+                    this.chemin.addLast(casePointee); // Ajoute la case dans le chemin
+                    chemin.affiche();
+                }
+                
+                else{
+                     chemin.setFreeAllCasesAndClear(); // vide le chemin et libère les cases
+                     System.out.println("La case n'est pas voisine de la précédente !");
+                } 
+            }
+            
+            else { //
+                chemin.setFreeAllCasesAndClear(); // vide le chemin et libère les cases
+                System.out.println("La case est déjà dans un chemin !");
+            }
+
+            if (chemin.size()>2){
+                setChanged();
+                notifyObservers(chemin.get(chemin.size()-2));
+            }
+
             setChanged();
-            notifyObservers(ca);
+            notifyObservers(casePointee);
         }
     }
 }

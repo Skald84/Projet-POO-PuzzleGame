@@ -15,23 +15,31 @@ public class CaseSymbole extends Case{
         S1, TRIANGLE, CARRE, CERCLE
     }
     
+    private symbole s;
+    private String img;
+    private Case.voisin voisin1;
     
-    /**
-     *
-     * @param x
-     * @param y
-     * @param s
-     */
     public CaseSymbole(int x, int y) {
       super(x, y);
+      this.s = symbole.S1;
       System.out.println("new CaseSymbole");
-      //this.symbole = s;
     }
     
-    private symbole s;
-    
-    private String imageDe(symbole s){
-        switch (s){
+    @Override
+    public String toString(){
+        return( getClass().getName() + "@" + Integer.toHexString(hashCode()) +
+                " ["
+                + this.x + ", "
+                + this.y +
+                ", libre : " + this.libre +
+                ", voisin : " + this.voisin1 +
+                ", voisin2 : " + this.voisin1 +
+                ", Symbole : " + this.s + "].");
+    }
+        
+    @Override
+    public String getImage(){
+        switch (this.s){
             case S1 :
                 return("/images/S1.png");
             case TRIANGLE :
