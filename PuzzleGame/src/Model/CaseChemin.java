@@ -62,6 +62,20 @@ public class CaseChemin extends Case{
         this.setCaseImg();
     }
     
+    /**
+     * Cette méthode permet de déterminer le second voisinage d'une CaseChemin
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param c
+     *          La case qui sera comparé à l'objet pour déterminé le second voisinage d'une case chemin
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     * @see
+     *          Case.setVoisin1() pour plus de détails sur la méthode
+     */
     public void setVoisin2(Case c){
         if(this.estVoisinParLeNord(c)){
             this.voisin2 = voisin.N;
@@ -82,7 +96,6 @@ public class CaseChemin extends Case{
     }
     
     private void setCaseImg(){
-        
         if (this.voisin1 == voisin.LIBRE && this.voisin2 == voisin.LIBRE) this.img = "/images/LIBRE.png";
         else if (this.voisin1 == voisin.N && this.voisin2 == voisin.LIBRE) this.img = "/images/N.png";
         else if (this.voisin1 == voisin.E && this.voisin2 == voisin.LIBRE) this.img = "/images/E.png";
