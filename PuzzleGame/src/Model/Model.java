@@ -5,7 +5,6 @@
  */
 package Model;
 
-import VueControleur.VueController;
 import java.util.Observable;
 
 
@@ -84,7 +83,7 @@ public class Model extends Observable {
      * @param r
      */
     public void parcoursDD(int c, int r) {
-        // TODO : comment ordonner à la vue de changer l'image de la case survolée ?
+        
         lastC = c;
         lastR = r;
         Case casePointee = this.grille.plateauJeu[c][r];
@@ -103,12 +102,10 @@ public class Model extends Observable {
         }
         
         else { // Si le chemin n'est pas vide
-            if (casePointee.getLibre() == true ){ // si la case libre
+            if (casePointee.estLibre() == true ){ // si la case libre
                 
                 if(casePointee.estVoisinDe(chemin.getLast())){ // Si la case pointée est voisine à la case précédemment pointée
                     
-                    //chemin.getLast().setVoisin1(casePointee);//détermine le voisin de la case pointée
-                    //casePointee.setVoisin1(chemin.getLast());// détermine le voisin de la case précédente
                     this.chemin.addLast(casePointee); // Ajoute la case dans le chemin
                     chemin.afficheChemin();
                 }

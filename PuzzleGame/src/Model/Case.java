@@ -80,7 +80,7 @@ public abstract class Case extends Observable{
      * @since
      *          1.0
      */
-    public boolean getLibre() {
+    protected boolean estLibre() {
         return libre;
     }
 

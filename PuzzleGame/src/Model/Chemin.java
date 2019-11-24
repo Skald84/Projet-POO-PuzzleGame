@@ -36,14 +36,8 @@ public class Chemin extends LinkedList<Case>{
             
             if(tailleDuChemin > 1){//si le chemin contient au moins 3 cases
                 
-                if(casePointee instanceof CaseChemin){//si la case pointée est une case chemin
                     CaseChemin CaseCheminPrecedente = (CaseChemin)casePrecedente;//on est obligé de la caster avant, sinon ca ne fonctionne pas...
                     CaseCheminPrecedente.setVoisin2(casePointee);//la case précédente est avoisinée avec la case courante
-                }
-                
-//                else{//il s'agit alors d'une case symbole, la derniere case du chemin
-//                    casePointee.setVoisin1(casePrecedente);
-//                }
             }
             super.addLast(casePointee);//une fois tout les voisins mis en place, on peut ajouter la case courante dans le chemin
         }

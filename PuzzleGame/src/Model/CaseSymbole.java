@@ -54,9 +54,4 @@ public class CaseSymbole extends Case{
                 img = "/images/ERREUR.png";
         }
     }
-    
-    @Override
-    public String getImage(){
-        return img;
-    }
 }

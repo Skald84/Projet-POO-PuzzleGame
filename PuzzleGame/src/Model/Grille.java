@@ -39,7 +39,7 @@ public class Grille extends Observable{
     public boolean puzzleResolu(){
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
-                if(this.plateauJeu[i][j].getLibre() == false) return(true);
+                if(this.plateauJeu[i][j].estLibre() == false) return(true);
             }
         }
         return false;
