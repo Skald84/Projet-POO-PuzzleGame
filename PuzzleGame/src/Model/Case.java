@@ -7,10 +7,15 @@ package Model;
 
 import java.util.Observable;
 
-/**
- *
- * @author et8ge
- */
+    /** Représente les cases (i.e. en général) qui composent la grille
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
 public abstract class Case extends Observable{
 
     protected enum voisin {
@@ -29,7 +34,6 @@ public abstract class Case extends Observable{
         this.x = cX;
         this.y = rY;
         this.libre = true;
-        this.img = "/images/LIBRE.png";
     }    
 
     /**
@@ -139,8 +143,7 @@ public abstract class Case extends Observable{
      */
     protected boolean estVoisinDe(Case c){
         
-        if(this.estVoisinParLeNord(c) || this.estVoisinParLEst(c) || this.estVoisinParLeSud(c) || this.estVoisinParLOuest(c)) return true;
-        return false;
+        return this.estVoisinParLeNord(c) || this.estVoisinParLEst(c) || this.estVoisinParLeSud(c) || this.estVoisinParLOuest(c);
     }
     
     /**
@@ -158,8 +161,7 @@ public abstract class Case extends Observable{
      *          1.0
      */
     protected boolean estVoisinParLeNord(Case c2){
-        if(x == c2.getX() && y-1 == c2.getY()) return true;
-        else return false;
+        return x == c2.getX() && y-1 == c2.getY();
     }
     
     /**
@@ -177,8 +179,7 @@ public abstract class Case extends Observable{
      *          1.0
      */
     protected boolean estVoisinParLEst(Case c2){
-        if(x+1 == c2.getX() && y == c2.getY()) return true;
-        else return false;
+        return x+1 == c2.getX() && y == c2.getY();
     }
     
     /**
@@ -196,8 +197,7 @@ public abstract class Case extends Observable{
      *          1.0
      */
     protected boolean estVoisinParLeSud(Case c2){
-        if(x == c2.getX() && y+1 == c2.getY())return true;
-        else return false;
+        return x == c2.getX() && y+1 == c2.getY();
     }
 
     /**
@@ -215,8 +215,7 @@ public abstract class Case extends Observable{
      *          1.0
      */
     protected boolean estVoisinParLOuest(Case c2){
-        if(x-1 == c2.getX() && y == c2.getY()) return true;
-        else return false;
+        return x-1 == c2.getX() && y == c2.getY();
     }
     
     /**
@@ -247,5 +246,9 @@ public abstract class Case extends Observable{
         else {
             this.voisin1 = voisin.LIBRE;
         }
+    }
+    
+    public void setCaseImg(){
+        
     }
 }

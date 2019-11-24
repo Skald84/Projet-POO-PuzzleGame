@@ -5,10 +5,15 @@
  */
 package Model;
 
-/**
- *
- * @author aymer
- */
+    /** Représente les cases symboles dans la grille
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
 public class CaseSymbole extends Case{
     
     private enum symbole {
@@ -17,7 +22,6 @@ public class CaseSymbole extends Case{
     
     private symbole s;
     private String img;
-    private Case.voisin voisin1;
     
     public CaseSymbole(int x, int y) {
       super(x, y);
@@ -33,23 +37,27 @@ public class CaseSymbole extends Case{
                 + this.y +
                 ", libre : " + this.libre +
                 ", voisin : " + this.voisin1 +
-                ", voisin2 : " + this.voisin1 +
                 ", Symbole : " + this.s + "].");
     }
-        
+    
     @Override
-    public String getImage(){
+    public void setCaseImg(){
         switch (this.s){
             case S1 :
-                return("/images/S1.png");
+                img = "/images/S1.png";
             case TRIANGLE :
-                return("/images/S1.png");
+                img = "/images/S1.png";
             case CARRE :
-                return("/images/S1.png");
+                img = "/images/S1.png";
             case CERCLE :
-                return("/images/S1.png");
+                img = "/images/S1.png";
             default :
-                return("/images/ERREUR.png");
+                img = "/images/ERREUR.png";
         }
+    }
+    
+    @Override
+    public String getImage(){
+        return img;
     }
 }

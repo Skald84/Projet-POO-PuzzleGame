@@ -5,10 +5,15 @@
  */
 package Model;
 
-/**
- *
- * @author aymer
- */
+    /** Représente les cases chemin qui composent la grille
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
 public class CaseChemin extends Case{
 
     private enum voisin {
@@ -16,9 +21,22 @@ public class CaseChemin extends Case{
     }
     
     private String img;
-    private voisin voisin1;
+    protected voisin voisin1;
     private voisin voisin2;
     
+    /** Ce constructeur créé une case chemin à partir de ses position en x et en y
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param cX
+     *          La position en abscisse (i.e. la colonne) de l'objet
+     * @param rY
+     *          La position en ordonnée (i.e. la ligne) de l'objet
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
     public CaseChemin(int cX, int rY) {
         super(cX, rY);
         this.img = "/images/LIBRE.png";
@@ -95,7 +113,8 @@ public class CaseChemin extends Case{
         this.setCaseImg();
     }
     
-    private void setCaseImg(){
+    @Override
+    public void setCaseImg(){
         if (this.voisin1 == voisin.LIBRE && this.voisin2 == voisin.LIBRE) this.img = "/images/LIBRE.png";
         else if (this.voisin1 == voisin.N && this.voisin2 == voisin.LIBRE) this.img = "/images/N.png";
         else if (this.voisin1 == voisin.E && this.voisin2 == voisin.LIBRE) this.img = "/images/E.png";
