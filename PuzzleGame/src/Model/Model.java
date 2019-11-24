@@ -66,12 +66,12 @@ public class Model extends Observable {
                 System.out.println("chemin valide");
             } else {
                 System.out.println("chemin non valide");
-                chemin.setFreeAllCasesAndClear();
+                chemin.reinitialisation();
                 chemin.afficheChemin();
             }
         } else{
             System.out.println("chemin non valide (chemin vide)");
-                chemin.setFreeAllCasesAndClear();
+                chemin.reinitialisation();
                 chemin.afficheChemin();
         }
         
@@ -114,13 +114,13 @@ public class Model extends Observable {
                 }
                 
                 else{
-                     chemin.setFreeAllCasesAndClear(); // vide le chemin et libère les cases
+                     chemin.reinitialisation(); // vide le chemin et libère les cases
                      System.out.println("La case n'est pas voisine de la précédente !");
                 } 
             }
             
             else { //
-                chemin.setFreeAllCasesAndClear(); // vide le chemin et libère les cases
+                chemin.reinitialisation(); // vide le chemin et libère les cases
                 System.out.println("La case est déjà dans un chemin !");
             }
 

@@ -53,7 +53,7 @@ public class CaseChemin extends Case{
                 + this.y +
                 ", libre : " + this.libre +
                 ", voisin : " + this.voisin1 +
-                ", voisin2 : " + this.voisin1 +
+                ", voisin2 : " + this.voisin2 +
                 ", image : " + this.img + "].");
     }
     

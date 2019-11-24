@@ -222,6 +222,8 @@ public class VueController extends Application implements Observer{
         //Gridpane + tableau d'image, est ce vraiment nécessaire ?
         String pathCaseImg = c.getImage();
         ConteneurImageCase[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
+        
+        System.out.println(c);
     }
     
 }
