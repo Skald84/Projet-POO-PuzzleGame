@@ -21,9 +21,8 @@ public class CaseSymbole extends Case{
     }
     
     private symbole s;
-    private String img;
     
-    public CaseSymbole(int x, int y) {
+    protected CaseSymbole(int x, int y) {
       super(x, y);
       this.s = symbole.S1;
       System.out.println("new CaseSymbole");

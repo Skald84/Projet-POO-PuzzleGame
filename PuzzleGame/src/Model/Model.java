@@ -49,7 +49,7 @@ public class Model extends Observable {
      */
     public void startDD(int c, int r) {
         System.out.println("taille: " + chemin.size());
-        chemin.affiche();
+        chemin.afficheChemin();
         System.out.println("startDD : " + c + "-" + r);
     }
     
@@ -62,17 +62,17 @@ public class Model extends Observable {
         // ajouter verif reference != sur getFirst et getLast
         if(!(chemin.isEmpty())){ // si chemin non vide 
             if (chemin.getLast() instanceof CaseSymbole ){ // si dernière case est case symbole
-                chemin.affiche();
+                chemin.afficheChemin();
                 System.out.println("chemin valide");
             } else {
                 System.out.println("chemin non valide");
                 chemin.setFreeAllCasesAndClear();
-                chemin.affiche();
+                chemin.afficheChemin();
             }
         } else{
             System.out.println("chemin non valide (chemin vide)");
                 chemin.setFreeAllCasesAndClear();
-                chemin.affiche();
+                chemin.afficheChemin();
         }
         
         System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
@@ -94,7 +94,7 @@ public class Model extends Observable {
         if (chemin.isEmpty()) { // si chemin vide
             if (casePointee instanceof CaseSymbole) { // Si c'est une case symbole
                 this.chemin.addLast(casePointee); // Ajoute la case dans le chemin
-                chemin.affiche();
+                chemin.afficheChemin();
             }
             
             else {
@@ -110,7 +110,7 @@ public class Model extends Observable {
                     //chemin.getLast().setVoisin1(casePointee);//détermine le voisin de la case pointée
                     //casePointee.setVoisin1(chemin.getLast());// détermine le voisin de la case précédente
                     this.chemin.addLast(casePointee); // Ajoute la case dans le chemin
-                    chemin.affiche();
+                    chemin.afficheChemin();
                 }
                 
                 else{

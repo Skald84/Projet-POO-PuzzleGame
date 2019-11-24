@@ -45,7 +45,7 @@ import javafx.stage.Stage;
 public class VueController extends Application implements Observer{
 
     GridPane grille;
-    ImageView[][] tabImageView;
+    ImageView[][] ConteneurImageCase;
     
     @Override
     public void start(Stage primaryStage) {
@@ -122,7 +122,7 @@ public class VueController extends Application implements Observer{
         int largeurGrille = 5; // rendre dynamique
         
         // création d'un tableau de conteneur d'image
-        tabImageView = new ImageView[longueurGrille][largeurGrille];
+        ConteneurImageCase = new ImageView[longueurGrille][largeurGrille];
         
         // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
             for (int column = 0; column < longueurGrille; column++) {
@@ -140,16 +140,16 @@ public class VueController extends Application implements Observer{
                             imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
                             //Pane root = new Pane();//UN NOUVEAU PANEL ?
                             //root.getChildren().add(imageView);
-                            tabImageView[column][row] = imageView;
-                            grille.add(tabImageView[column][row], column, row);
+                            ConteneurImageCase[column][row] = imageView;
+                            grille.add(ConteneurImageCase[column][row], column, row);
                     } else {
 
                         //remplissage des autres cases par la même image vide
                             imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                             //Pane root = new Pane();
                             //root.getChildren().add(imageView);
-                            tabImageView[column][row] = imageView;
-                            grille.add(tabImageView[column][row], column, row);
+                            ConteneurImageCase[column][row] = imageView;
+                            grille.add(ConteneurImageCase[column][row], column, row);
                             
                     }
                     
@@ -199,12 +199,8 @@ public class VueController extends Application implements Observer{
         primaryStage.setResizable(false);//ne permet plus de redimensionner la fenêtre
         primaryStage.centerOnScreen();//affiche la fenêtre au centre de l'écran
         primaryStage.show();
-    /**
-     *
-     */
     }
     
-  
     /**
      * @param args the command line arguments
      */
@@ -215,18 +211,17 @@ public class VueController extends Application implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         
-        //on récupère l'argument ("arg") case ("o" étant l'observable, ici "model"), qu'on transforme en case, puis on récupère ses coordonnées
-        System.out.println("maj de " + arg);
+        //on récupère le second argument ("arg"), qu'on cast en case, pour enfin récuperer ses coordonnées
+        //le premier argument, "o",  est l'observable, ici "model")
         Case c = (Case) arg;
         int x = c.getX();
         int y = c.getY();
-        System.out.println("maj de " + c);
         
+        //On peut ainsi rafraîchir la représentation de la case en récupérant le chemin absolu de son imgage, puis
+        //On met à jour l'image associé dans le conteneur d'image
+        //Gridpane + tableau d'image, est ce vraiment nécessaire ?
         String pathCaseImg = c.getImage();
-        System.out.println("image de arg : " + pathCaseImg);
-        
-
-        tabImageView[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
+        ConteneurImageCase[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
     }
     
 }

@@ -22,15 +22,15 @@ public abstract class Case extends Observable{
         LIBRE, N, E, S, O
     }
     
-    public final int x;
-    public final int y;
+    protected final int x;
+    protected final int y;
     
-    public boolean libre;
+    protected boolean libre;
     protected voisin voisin1;
-    private String img;
+    protected String img;
     
     
-    public Case(int cX, int rY){
+    protected Case(int cX, int rY){
         this.x = cX;
         this.y = rY;
         this.libre = true;
@@ -96,7 +96,7 @@ public abstract class Case extends Observable{
      * @since
      *          1.0
      */
-    public void setLibre(boolean libre) {
+    protected void setLibre(boolean libre) {
         this.libre = libre;
         this.voisin1 = voisin.LIBRE;
     }
@@ -113,6 +113,7 @@ public abstract class Case extends Observable{
     
     /**
      * Cette méthode permet de retourner, sous la forme d'une chaîne de caractère, le chemin absolu vers l'image représentant l'état actuel de l'objet
+     * Cette méy=thode dispose d'une portée publique car elle est appellée dans le controller
      * 
      * @authors
      *          G.FERRAND & A.TOUCHE
@@ -230,7 +231,7 @@ public abstract class Case extends Observable{
      * @since
      *          1.0
      */
-    public void setVoisin1(Case c){
+    protected void setVoisin1(Case c){
         if (this.estVoisinParLeNord(c)){
             this.voisin1 = voisin.N;
         }
@@ -248,7 +249,7 @@ public abstract class Case extends Observable{
         }
     }
     
-    public void setCaseImg(){
+    protected void setCaseImg(){
         
     }
 }

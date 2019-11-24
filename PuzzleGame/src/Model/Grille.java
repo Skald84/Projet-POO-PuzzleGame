@@ -14,7 +14,8 @@ import java.util.Observable;
 
 public class Grille extends Observable{
     
-    int lo, la;
+    final int lo;
+    final int la;
     public Case[][] plateauJeu;
     
     
@@ -38,7 +39,7 @@ public class Grille extends Observable{
     public boolean puzzleResolu(){
         for(int i =0 ; i < lo ; i++){
             for(int j =0 ; j < la ; j++){
-                if(this.plateauJeu[i][j].libre == false) return(true);
+                if(this.plateauJeu[i][j].getLibre() == false) return(true);
             }
         }
         return false;

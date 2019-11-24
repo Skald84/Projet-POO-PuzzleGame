@@ -16,12 +16,6 @@ package Model;
      */
 public class CaseChemin extends Case{
 
-    private enum voisin {
-        LIBRE, N, E, S, O
-    }
-    
-    private String img;
-    protected voisin voisin1;
     private voisin voisin2;
     
     /** Ce constructeur créé une case chemin à partir de ses position en x et en y
@@ -37,7 +31,7 @@ public class CaseChemin extends Case{
      * @since
      *          1.0
      */
-    public CaseChemin(int cX, int rY) {
+    protected CaseChemin(int cX, int rY) {
         super(cX, rY);
         this.img = "/images/LIBRE.png";
         this.voisin1 = voisin.LIBRE;
@@ -46,7 +40,7 @@ public class CaseChemin extends Case{
     }
     
     @Override
-    public void setLibre(boolean libre) {
+    protected void setLibre(boolean libre) {
         this.libre = libre;
         this.img = "/images/LIBRE.png";
     }
@@ -64,7 +58,7 @@ public class CaseChemin extends Case{
     }
     
     @Override
-    public void setVoisin1(Case c){
+    protected void setVoisin1(Case c){
         if (this.estVoisinParLeNord(c)){
             this.voisin1 = voisin.N;
         }
@@ -94,7 +88,7 @@ public class CaseChemin extends Case{
      * @see
      *          Case.setVoisin1() pour plus de détails sur la méthode
      */
-    public void setVoisin2(Case c){
+    protected void setVoisin2(Case c){
         if(this.estVoisinParLeNord(c)){
             this.voisin2 = voisin.N;
         }
@@ -114,7 +108,7 @@ public class CaseChemin extends Case{
     }
     
     @Override
-    public void setCaseImg(){
+    protected void setCaseImg(){
         if (this.voisin1 == voisin.LIBRE && this.voisin2 == voisin.LIBRE) this.img = "/images/LIBRE.png";
         else if (this.voisin1 == voisin.N && this.voisin2 == voisin.LIBRE) this.img = "/images/N.png";
         else if (this.voisin1 == voisin.E && this.voisin2 == voisin.LIBRE) this.img = "/images/E.png";

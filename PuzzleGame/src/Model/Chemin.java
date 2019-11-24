@@ -14,7 +14,6 @@ import java.util.ListIterator;
  * @author aymer
  */
 public class Chemin extends LinkedList<Case>{
-    	
     
     public Chemin(){
         super();
@@ -53,30 +52,9 @@ public class Chemin extends LinkedList<Case>{
             System.out.println("la case courante est ajoutée au chemin");
             super.addLast(casePointee);//une fois tout les voisins mis en place, on peut ajouter la case courante dans le chemin
         }
-        
-        
-        
-        
-        
-        
-        
-//        if(tailleDuChemin == 0)super.add(casePointee);//si le chemin est vide
-//        
-//        else{//si le chemin n'est pas vide
-//            Case casePrecedente = getLast();
-//            
-//            if (tailleDuChemin > 2){
-//                CaseChemin caseCheminPrecedente = (CaseChemin)casePrecedente;
-//                caseCheminPrecedente.setVoisin2(casePointee);
-//            }
-//            else if (tailleDuChemin > 1){
-//                casePointee.setVoisin1(casePrecedente);
-//            }
-//            super.add(casePointee);
-//        }
     }
     
-    public void affiche(){
+    public void afficheChemin(){
         System.out.println("debut liste:--------------------------");
         for (int i = 0; i < this.size(); i++) {
             System.out.println(this.get(i).toString());
