@@ -25,7 +25,24 @@ public class CaseSymbole extends Case{
     protected CaseSymbole(int x, int y) {
       super(x, y);
       this.s = symbole.S1;
+      setCaseImg();
       System.out.println("new CaseSymbole");
+    }
+
+    /**
+     * Cette méthode permet d'accéder au symbole de l'objet
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @return
+     *          Le symbole de l'objet
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
+    protected symbole getSymbole(){
+        return this.s;
     }
     
     @Override
@@ -36,22 +53,15 @@ public class CaseSymbole extends Case{
                 + this.y +
                 ", libre : " + this.libre +
                 ", voisin : " + this.voisin1 +
-                ", Symbole : " + this.s + "].");
+                ", Symbole : " + this.s +
+                ", image : " + this.img + "].");
     }
     
-    @Override
-    public void setCaseImg(){
-        switch (this.s){
-            case S1 :
-                img = "/images/S1.png";
-            case TRIANGLE :
-                img = "/images/S1.png";
-            case CARRE :
-                img = "/images/S1.png";
-            case CERCLE :
-                img = "/images/S1.png";
-            default :
-                img = "/images/ERREUR.png";
-        }
+    private void setCaseImg(){
+        if (this.s == symbole.S1) img = "/images/S1.png";
+        if (this.s == symbole.S1) img = "/images/S1.png";
+        if (this.s == symbole.S1) img = "/images/S1.png";
+        if (this.s == symbole.S1) img = "/images/S1.png";
+        else img = "/images/ERREUR.png";
     }
 }

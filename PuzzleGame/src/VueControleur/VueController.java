@@ -135,7 +135,7 @@ public class VueController extends Application implements Observer{
                     
                     if ((column == 0 && row == 0) || (column == longueurGrille -1 && row == largeurGrille -1)) {
                         
-                        // image symbole en début et fin de tableau
+                            // image symbole en début et fin de tableau
                             //création d'un conteneur d'img + ajout image dedans
                             imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
                             //Pane root = new Pane();//UN NOUVEAU PANEL ?
@@ -222,8 +222,6 @@ public class VueController extends Application implements Observer{
         //Gridpane + tableau d'image, est ce vraiment nécessaire ?
         String pathCaseImg = c.getImage();
         ConteneurImageCase[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
-        
-        System.out.println(c);
     }
     
 }

@@ -248,8 +248,4 @@ public abstract class Case extends Observable{
             this.voisin1 = voisin.LIBRE;
         }
     }
-    
-    protected void setCaseImg(){
-        
-    }
 }

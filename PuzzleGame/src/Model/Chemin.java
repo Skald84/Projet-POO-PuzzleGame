@@ -19,28 +19,36 @@ public class Chemin extends LinkedList<Case>{
         super();
         System.out.println(this);
     }
+ 
+////V1
+//    @Override
+//    public void addLast(Case casePointee){
+//        
+//        int tailleDuChemin = size();
+//        
+//        casePointee.setLibre(false);
+//        
+//        if(tailleDuChemin == 0) {//si le chemin est vide
+//            super.addLast(casePointee);
+//        }
+//        else{// si le chemin n'est pas vide
+//            Case casePrecedente = this.get(tailleDuChemin-1);
+//            casePointee.setVoisin1(casePrecedente);//la case courante est avoisinée avec la case précédente
+//            
+//            if(tailleDuChemin > 1){//si le chemin contient au moins 3 cases
+//                
+//                    CaseChemin CaseCheminPrecedente = (CaseChemin)casePrecedente;//on est obligé de la caster avant, sinon ca ne fonctionne pas...
+//                    CaseCheminPrecedente.setVoisin2(casePointee);//la case précédente est avoisinée avec la case courante
+//            }
+//            super.addLast(casePointee);//une fois tout les voisins mis en place, on peut ajouter la case courante dans le chemin
+//        }
+//    }
     
+//V2
     @Override
     public void addLast(Case casePointee){
-        
-        int tailleDuChemin = size();
-        
+        super.addLast(casePointee);
         casePointee.setLibre(false);
-        
-        if(tailleDuChemin == 0) {//si le chemin est vide
-            super.addLast(casePointee);
-        }
-        else{// si le chemin n'est pas vide
-            Case casePrecedente = this.get(tailleDuChemin-1);
-            casePointee.setVoisin1(casePrecedente);//la case courante est avoisinée avec la case précédente
-            
-            if(tailleDuChemin > 1){//si le chemin contient au moins 3 cases
-                
-                    CaseChemin CaseCheminPrecedente = (CaseChemin)casePrecedente;//on est obligé de la caster avant, sinon ca ne fonctionne pas...
-                    CaseCheminPrecedente.setVoisin2(casePointee);//la case précédente est avoisinée avec la case courante
-            }
-            super.addLast(casePointee);//une fois tout les voisins mis en place, on peut ajouter la case courante dans le chemin
-        }
     }
     
     public void afficheChemin(){
