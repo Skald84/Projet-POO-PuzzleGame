@@ -121,6 +121,6 @@ public class CaseChemin extends Case{
         else if ((this.voisin1 == voisin.E && this.voisin2 == voisin.O) || (this.voisin1 == voisin.O && this.voisin2 == voisin.E)) this.img = "/images/EO.png";
         else if ((this.voisin1 == voisin.S && this.voisin2 == voisin.O) || (this.voisin1 == voisin.O && this.voisin2 == voisin.S)) this.img = "/images/SO.png";
         else this.img = "/images/ERREUR.png";
-        System.out.println(img);
-    }
+        System.out.println("setcaseimg casechemin");
+        System.out.println(this);    }
 }

@@ -62,6 +62,12 @@ public class Model extends Observable {
             if (chemin.getLast() instanceof CaseSymbole ){ // si dernière case est case symbole
                 chemin.afficheChemin();
                 System.out.println("chemin valide");
+                if(grille.puzzleResolu()){
+                    System.out.println("Puzzle Résolu");
+                }
+                else{
+                    System.out.println("Des cases sont encore vides !");
+                }
             } else {
                 System.out.println("chemin non valide");
                 reinitialisation(chemin);

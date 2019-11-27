@@ -63,5 +63,7 @@ public class CaseSymbole extends Case{
         if (this.s == symbole.S1) img = "/images/S1.png";
         if (this.s == symbole.S1) img = "/images/S1.png";
         else img = "/images/ERREUR.png";
+        System.out.println("setcaseimg casesymbole");
+        System.out.println(this);
     }
 }
