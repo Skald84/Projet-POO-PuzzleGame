@@ -26,7 +26,6 @@ public class CaseSymbole extends Case{
       super(x, y);
       this.s = symbole.S1;
       setCaseImg();
-      System.out.println("new CaseSymbole");
     }
 
     /**
@@ -63,7 +62,5 @@ public class CaseSymbole extends Case{
         if (this.s == symbole.S1) img = "/images/S1.png";
         if (this.s == symbole.S1) img = "/images/S1.png";
         else img = "/images/ERREUR.png";
-        System.out.println("setcaseimg casesymbole");
-        System.out.println(this);
     }
 }

@@ -36,13 +36,12 @@ public class CaseChemin extends Case{
         this.img = "/images/LIBRE.png";
         this.voisin1 = voisin.LIBRE;
         this.voisin2 = voisin.LIBRE;
-        System.out.println("new CaseChemin");
     }
     
     @Override
     protected void setLibre(boolean libre) {
         this.libre = libre;
-        this.img = "/images/LIBRE.png";
+        this.setCaseImg();
     }
     
     @Override
@@ -72,7 +71,6 @@ public class CaseChemin extends Case{
             this.voisin1 = voisin.O;
         }
         this.setCaseImg();
-        System.out.println("set img voisin1");
     }
     
     /**
@@ -121,6 +119,5 @@ public class CaseChemin extends Case{
         else if ((this.voisin1 == voisin.E && this.voisin2 == voisin.O) || (this.voisin1 == voisin.O && this.voisin2 == voisin.E)) this.img = "/images/EO.png";
         else if ((this.voisin1 == voisin.S && this.voisin2 == voisin.O) || (this.voisin1 == voisin.O && this.voisin2 == voisin.S)) this.img = "/images/SO.png";
         else this.img = "/images/ERREUR.png";
-        System.out.println("setcaseimg casechemin");
-        System.out.println(this);    }
+    }
 }
