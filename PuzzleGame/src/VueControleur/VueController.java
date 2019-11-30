@@ -11,6 +11,8 @@ import Model.Model;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -49,20 +51,20 @@ public class VueController extends Application implements Observer{
 
     GridPane grille;
     ImageView[][] ConteneurImageCase;
-    String niveauChoisi;
+    String niveauChoisi="";
     
     @Override
     public void start(Stage primaryStage) {
         
         Group root = new Group();
-        Scene sceneJeu = new Scene(root, 500, 500);
+        Scene sceneJeu = new Scene(root, 800, 800);
         
         
         //Gestion ecran d'accueil
             Group accueil = new Group();
-            Scene sceneAccueil = new Scene(accueil, 500, 500);
+            Scene sceneAccueil = new Scene(accueil, 800, 800);
             BorderPane ecranAccueil = new BorderPane();
-            ecranAccueil.setPrefSize(500, 500);
+            ecranAccueil.setPrefSize(800, 800);
             accueil.getChildren().add(ecranAccueil);
 
 
@@ -103,7 +105,218 @@ public class VueController extends Application implements Observer{
 
             btnJouer.setOnAction(e -> { primaryStage.setScene(sceneJeu);
                                         niveauChoisi = String.valueOf(listeNiveaux.getValue()); 
-                                        System.out.println("niveau choisi : "+ niveauChoisi);
+                                        System.out.println("niveau choisi : " + listeNiveaux.getValue());
+                                                                               
+                                            //Instanciation du modèle
+                                            Model m = new Model();
+                                            m.addObserver(this); // Obervation du modèle par la vue
+
+                                            //Initialisation de la fenêtre principale
+                                            BorderPane border = new BorderPane();
+
+                                            HBox menuHaut = new HBox(100);
+                                            border.setTop(menuHaut);
+
+                                            VBox menuGauche = new VBox(100);
+                                            border.setLeft(menuGauche);
+
+                                            VBox menuDroit = new VBox(100);
+                                            border.setRight(menuDroit);
+
+                                            HBox menuBas = new HBox(100);
+                                            border.setBottom(menuBas);
+
+                                            root.getChildren().add(border);
+
+                                            /*
+                                            //Initialisation du titre de la page
+                                            Text affichage = new Text("Puzzle Game");
+                                            affichage.setFont(Font.font("Calibri", 30));
+                                            affichage.setFill(Color.RED);
+                                            border.setTop(affichage);
+                                            BorderPane.setAlignment(affichage, Pos.CENTER);
+
+                                            //initialisation du menu gauche
+                                            Button recommencerPuzzle = new Button("recommencer");
+                                            border.setLeft(recommencerPuzzle);
+                                            menuGauche.getChildren().add(recommencerPuzzle);
+
+                                            Text choixDuNiveau = new Text("Choix du niveau :");
+                                            border.setLeft(choixDuNiveau);
+                                            menuGauche.getChildren().add(choixDuNiveau);
+
+                                            Button btnNiveau1 = new Button("Niveau 1");
+                                            border.setLeft(btnNiveau1);
+                                            menuGauche.getChildren().add(btnNiveau1);
+
+                                            Button btnNiveau2 = new Button("Niveau 2");
+                                            border.setLeft(btnNiveau2);
+                                            menuGauche.getChildren().add(btnNiveau2);
+
+                                            Button btnNiveau3 = new Button("Niveau 3");
+                                            border.setLeft(btnNiveau3);
+                                            menuGauche.getChildren().add(btnNiveau3);
+
+                                            menuGauche.setSpacing(10);
+                                            menuGauche.setPadding(new Insets(15, 15, 15, 15));
+                                            border.setLeft(menuGauche);
+
+                                            //fin initialisation du menu gauche
+                                            */
+
+                                            //initialisation de la grille
+                                            grille = new GridPane();
+                                            border.setCenter(grille);
+                                            BorderPane.setAlignment(grille, Pos.CENTER);
+                                            //grille.setPrefSize(300,300);
+
+
+                                            // Création de la Grille en fonction du niveau
+                                                        int longueurGrille; // a modifier
+                                                        int largeurGrille; // rendre dynamique
+                                                        
+                                            m.creerChemin(); // crée chemin vide via modèle
+
+
+                                                        // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
+                                                        switch(niveauChoisi) {
+                                                                    case "1":
+                                                                      longueurGrille = 4; // a modifier
+                                                                      largeurGrille = 4; // rendre dynamique
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      // création d'un tableau de conteneur d'image
+                                                        ConteneurImageCase = new ImageView[longueurGrille][largeurGrille];
+
+                                                        // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
+                                                            for (int row = 0; row < longueurGrille; row++) {
+                                                                for (int column = 0; column < largeurGrille; column++) {
+
+                                                                    final int fColumn = column;
+                                                                    final int fRow = row;
+
+                                                                    ImageView imageView;
+
+                                                                    if ((row == 0 && column == 0) || (row == longueurGrille -1 && column == largeurGrille -1)) {
+
+                                                                            // image symbole en début et fin de tableau
+                                                                            // création d'un conteneur d'img + ajout image dedans
+                                                                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
+                                                                            ConteneurImageCase[row][column] = imageView;
+                                                                            grille.add(ConteneurImageCase[row][column], row, column);
+                                                                    } else if ((row == 0 && column == 1) || (row == 2 && column == 3)) {
+
+                                                                            // image symbole en début et fin de tableau
+                                                                            // création d'un conteneur d'img + ajout image dedans
+                                                                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/ERREUR.png")));
+                                                                            ConteneurImageCase[row][column] = imageView;
+                                                                            grille.add(ConteneurImageCase[row][column], row, column);
+                                                                    } else {
+
+                                                                        // remplissage des autres cases par la même image vide
+                                                                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
+                                                                            ConteneurImageCase[row][column] = imageView;
+                                                                            grille.add(ConteneurImageCase[row][column], row, column);
+
+                                                                    }
+
+                                                                  
+                                                                    //Drag & Drop
+
+                                                                        imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
+                                                                            public void handle(MouseEvent event) {
+                                                                                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                                                                                ClipboardContent content = new ClipboardContent();       
+                                                                                content.putString(""); // non utilisÃ© actuellement
+                                                                                db.setContent(content);
+                                                                                event.consume();
+                                                                                m.startDD(fColumn, fRow);
+                                                                            }
+                                                                        });
+
+                                                                        imageView.setOnDragEntered(new EventHandler<DragEvent>() {
+                                                                            public void handle(DragEvent event) {
+                                                                                m.parcoursDD(fColumn, fRow);
+                                                                                event.consume();
+                                                                            }
+                                                                        });
+
+                                                                        imageView.setOnDragDone(new EventHandler<DragEvent>() {
+                                                                            public void handle(DragEvent event) {
+
+                                                                                // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
+                                                                                //|->??
+
+                                                                                m.stopDD(fColumn, fRow);
+                                                                            }
+                                                                        }
+                                                                    );
+                                                                }
+                                                    }
+
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      break;
+                                                                    case "2":
+                                                                      longueurGrille = 4; // a modifier
+                                                                      largeurGrille = 5; // rendre dynamique
+                                                                      break;
+                                                                    case "3":
+                                                                      longueurGrille = 5; // a modifier
+                                                                      largeurGrille = 5; // rendre dynamique
+                                                                      break;
+                                                                    default:
+                                                                      longueurGrille = 6; // a modifier
+                                                                      largeurGrille = 5; // rendre dynamique
+                                                                  }
+                                                        
+                                                        m.creerGrille(niveauChoisi); // crée Grille via modele
+
+
+                                                        
+
+            
+            
+        border.setCenter(grille);
+        grille.setGridLinesVisible(true);
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                       });
             
             btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
@@ -117,164 +330,23 @@ public class VueController extends Application implements Observer{
 
             BorderPane.setAlignment(menu, Pos.TOP_CENTER);
             ecranAccueil.setCenter(menu);
-        
-        
-        
-        
-        //Instanciation du modèle
-        Model m = new Model();
-        m.addObserver(this); // Obervation du modèle par la vue
-        
-     
-   
-        
-        m.creerGrille(5,5); // crée Grille via modele
-        m.creerChemin(); // crée chemin vide via modèle
-        
-        
-             
-        
-        //Initialisation de la fenêtre principale
-        BorderPane border = new BorderPane();
-        
-        HBox menuHaut = new HBox(100);
-        border.setTop(menuHaut);
-        
-        VBox menuGauche = new VBox(100);
-        border.setLeft(menuGauche);
-        
-        VBox menuDroit = new VBox(100);
-        border.setRight(menuDroit);
-        
-        HBox menuBas = new HBox(100);
-        border.setBottom(menuBas);
-        
-        root.getChildren().add(border);
-        
-        /*
-        //Initialisation du titre de la page
-        Text affichage = new Text("Puzzle Game");
-        affichage.setFont(Font.font("Calibri", 30));
-        affichage.setFill(Color.RED);
-        border.setTop(affichage);
-        BorderPane.setAlignment(affichage, Pos.CENTER);
-        
-        //initialisation du menu gauche
-        Button recommencerPuzzle = new Button("recommencer");
-        border.setLeft(recommencerPuzzle);
-        menuGauche.getChildren().add(recommencerPuzzle);
-        
-        Text choixDuNiveau = new Text("Choix du niveau :");
-        border.setLeft(choixDuNiveau);
-        menuGauche.getChildren().add(choixDuNiveau);
-        
-        Button btnNiveau1 = new Button("Niveau 1");
-        border.setLeft(btnNiveau1);
-        menuGauche.getChildren().add(btnNiveau1);
-        
-        Button btnNiveau2 = new Button("Niveau 2");
-        border.setLeft(btnNiveau2);
-        menuGauche.getChildren().add(btnNiveau2);
-        
-        Button btnNiveau3 = new Button("Niveau 3");
-        border.setLeft(btnNiveau3);
-        menuGauche.getChildren().add(btnNiveau3);
-        
-        menuGauche.setSpacing(10);
-        menuGauche.setPadding(new Insets(15, 15, 15, 15));
-        border.setLeft(menuGauche);
-        
-        //fin initialisation du menu gauche
-        */
-        
-        //initialisation de la grille
-        grille = new GridPane();
-        border.setCenter(grille);
-        BorderPane.setAlignment(grille, Pos.CENTER);
-        //grille.setPrefSize(300,300);
-        
-        
-        // Création de la Grille en fonction du niveau
             
-        
             
-                    // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
-                    int longueurGrille = 5; // a modifier
-                    int largeurGrille = 5; // rendre dynamique
-
-                    // création d'un tableau de conteneur d'image
-                    ConteneurImageCase = new ImageView[longueurGrille][largeurGrille];
-
-                    // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
-                        for (int column = 0; column < longueurGrille; column++) {
-                            for (int row = 0; row < largeurGrille; row++) {
-
-                                final int fColumn = column;
-                                final int fRow = row;
-
-                                ImageView imageView;
-
-                                if ((column == 0 && row == 0) || (column == longueurGrille -1 && row == largeurGrille -1)) {
-
-                                        // image symbole en début et fin de tableau
-                                        //création d'un conteneur d'img + ajout image dedans
-                                        imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
-                                        //Pane root = new Pane();//UN NOUVEAU PANEL ?
-                                        //root.getChildren().add(imageView);
-                                        ConteneurImageCase[column][row] = imageView;
-                                        grille.add(ConteneurImageCase[column][row], column, row);
-                                } else {
-
-                                    //remplissage des autres cases par la même image vide
-                                        imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
-                                        //Pane root = new Pane();
-                                        //root.getChildren().add(imageView);
-                                        ConteneurImageCase[column][row] = imageView;
-                                        grille.add(ConteneurImageCase[column][row], column, row);
-
-                                }
-
-                                //TODO : instancier le plateau de jeu selon une grille prédéfinie (grille statique pour le moment)
-
-
-                                //Drag & Drop
-
-                                    imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
-                                        public void handle(MouseEvent event) {
-                                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                                            ClipboardContent content = new ClipboardContent();       
-                                            content.putString(""); // non utilisÃ© actuellement
-                                            db.setContent(content);
-                                            event.consume();
-                                            m.startDD(fColumn, fRow);
-                                        }
-                                    });
-
-                                    imageView.setOnDragEntered(new EventHandler<DragEvent>() {
-                                        public void handle(DragEvent event) {
-                                            m.parcoursDD(fColumn, fRow);
-                                            event.consume();
-                                        }
-                                    });
-
-                                    imageView.setOnDragDone(new EventHandler<DragEvent>() {
-                                        public void handle(DragEvent event) {
-
-                                            // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
-                                            //|->??
-
-                                            m.stopDD(fColumn, fRow);
-                                        }
-                                    }
-                                );
-                            }
+            
+            
+            //Listener combobox
+            listeNiveaux.valueProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println("Selected value : " + newValue);
+                                        
                 }
-
-
-            
-            
-        border.setCenter(grille);
-        grille.setGridLinesVisible(true);
+            });
+        
+        
+        
+        
+        
         
         
         

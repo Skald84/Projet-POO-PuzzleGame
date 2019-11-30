@@ -17,18 +17,17 @@ public class Model extends Observable {
     int lastC, lastR;
     
     private Chemin chemin;
-    private Grille grille;
+    public Grille grille;
     
     /**
      * Crée un objet grille
-     * @param largeur
-     * @param longueur
+     * @param niveau
      */
-    public void creerGrille(int largeur, int longueur){
-        this.grille = new Grille(largeur, longueur);
+    public void creerGrille(String niveau){
+        this.grille = new Grille(niveau);
         
-        for(int i = 0 ; i < longueur ; i++){
-            for(int j = 0 ; j < largeur ; j++){
+        for(int i = 0 ; i < grille.getLo() ; i++){
+            for(int j = 0 ; j < grille.getLa() ; j++){
                 System.out.println(this.grille.plateauJeu[i][j]);
             }
         }
@@ -91,9 +90,9 @@ public class Model extends Observable {
         
         lastC = c;
         lastR = r;
-        Case casePointee = this.grille.plateauJeu[c][r];
+        Case casePointee = this.grille.plateauJeu[r][c];
         
-        System.out.println("parcoursDD : " + c + "-" + r);
+        System.out.println("parcoursDD : " + r + "-" + c);
         
 ////--------------------------------------------------------------------------------------v1
 //        if (chemin.isEmpty()) { // si chemin vide
