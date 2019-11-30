@@ -15,8 +15,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -50,12 +53,81 @@ public class VueController extends Application implements Observer{
     @Override
     public void start(Stage primaryStage) {
         
+        Group root = new Group();
+        Scene sceneJeu = new Scene(root, 500, 500);
+        
+        
+        //Gestion ecran d'accueil
+            Group accueil = new Group();
+            Scene sceneAccueil = new Scene(accueil, 500, 500);
+            BorderPane ecranAccueil = new BorderPane();
+            ecranAccueil.setPrefSize(500, 500);
+            accueil.getChildren().add(ecranAccueil);
+
+            // Bouton Jouer
+            Button btnJouer = new Button("Jouer !");    
+            btnJouer.setPrefSize(120, 60);
+            btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
+
+            btnJouer.setOnAction(e -> primaryStage.setScene(sceneJeu));
+            btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
+            btnJouer.setOnMouseExited(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-color:white;-fx-text-fill: #830601;"));
+
+
+
+            // Titre
+            Text titre = new Text("PUZZLE GAME");
+            titre.setStyle("-fx-background-color:yellow;");
+            titre.setFont(new Font("Footlight MT Light",50));
+            BorderPane.setAlignment(titre, Pos.TOP_CENTER);
+
+
+
+            // Choix du niveau
+                // Label
+                Label choixNiveau = new Label("Niveau");
+                choixNiveau.setFont(new Font("Century Gothic",20));
+
+                // ComboBox
+                ComboBox listeNiveaux = new ComboBox();
+                listeNiveaux.setStyle("-fx-background-color:white;-fx-font: 20px \"Century Gothic\";");
+                listeNiveaux.getItems().addAll(
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5" 
+                );   
+
+
+                //int niveauChoisi = Integer.parseInt(choixNiveau.getText()); // pourra permettre d'appeller la bonne grille
+
+                HBox niveau = new HBox();
+                niveau.getChildren().add(choixNiveau);
+                niveau.getChildren().add(listeNiveaux);
+                niveau.setAlignment(Pos.CENTER);
+                niveau.setSpacing(40);
+
+            // Menu 
+            VBox menu = new VBox();
+            menu.getChildren().addAll(titre,niveau,btnJouer);
+            menu.setAlignment(Pos.CENTER);
+            menu.setSpacing(60);
+
+            BorderPane.setAlignment(menu, Pos.TOP_CENTER);
+            ecranAccueil.setCenter(menu);
+        
+        
+        
+        
         //Instanciation du modèle
         Model m = new Model();
         m.addObserver(this); // Obervation du modèle par la vue
         
         m.creerGrille(5,5); // crée Grille via modele
         m.creerChemin(); // crée chemin vide via modèle
+        
+        
              
         
         //Initialisation de la fenêtre principale
@@ -72,6 +144,8 @@ public class VueController extends Application implements Observer{
         
         HBox menuBas = new HBox(100);
         border.setBottom(menuBas);
+        
+        root.getChildren().add(border);
         
         /*
         //Initialisation du titre de la page
@@ -192,10 +266,26 @@ public class VueController extends Application implements Observer{
         border.setCenter(grille);
         grille.setGridLinesVisible(true);
         
-        Scene scene = new Scene(border, 500, 500);
         
-        primaryStage.setTitle("Puzzle Game !");
-        primaryStage.setScene(scene);
+        
+        
+        
+        
+        
+        
+        
+     
+        
+        
+        
+        
+        
+        
+        
+        
+        // Gestion de la Fenetre
+        primaryStage.setTitle("Puzzle Game !!!!");
+        primaryStage.setScene(sceneAccueil);
         primaryStage.setResizable(false);//ne permet plus de redimensionner la fenêtre
         primaryStage.centerOnScreen();//affiche la fenêtre au centre de l'écran
         primaryStage.show();
