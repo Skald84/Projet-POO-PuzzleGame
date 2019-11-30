@@ -36,7 +36,7 @@ public class Model extends Observable {
     }
     
     /**
-     * crée nouveau chemin
+     * crée trois nouveaux chemins
      */
     public void creerChemin(){
         this.chemin1 = new Chemin();
@@ -50,16 +50,15 @@ public class Model extends Observable {
      * @param r
      */
     public void startDD(int c, int r) {
+        
+        chemin = chemin1;
         if (!chemin.isEmpty()) {
-            if (chemin1.getFirst().getImage().equals(chemin1.getLast().getImage())) {
-                        chemin = chemin1;
-                    } else{
-                        chemin = chemin2;
-                    }
+            if (chemin.getFirst().getImage().equals(chemin.getLast().getImage())) {
+                chemin = chemin2;
+            }
         chemin.afficheChemin();
         System.out.println("startDD : " + c + "-" + r);
         }
-        
     }
     
     /**
@@ -95,6 +94,12 @@ public class Model extends Observable {
                 chemin.afficheChemin();
         }
         
+        if (chemin == chemin1) {
+                chemin1 = chemin;
+            }else{
+                chemin2 = chemin;
+            }
+        
         System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
     }
     
@@ -110,12 +115,10 @@ public class Model extends Observable {
         Case casePointee = this.grille.plateauJeu[r][c];
         
         System.out.println("parcoursDD : " + r + "-" + c);
-        chemin = chemin1;
-        
+                        
         if(casePointee.estLibre()){
             if(chemin.isEmpty()){
                 if(casePointee instanceof CaseSymbole){
-                    
                     chemin.addLast(casePointee);
                 }
                 else{//le chemin ne commence pas par une case symbole
