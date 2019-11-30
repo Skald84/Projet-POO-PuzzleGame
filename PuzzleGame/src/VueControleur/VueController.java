@@ -49,6 +49,7 @@ public class VueController extends Application implements Observer{
 
     GridPane grille;
     ImageView[][] ConteneurImageCase;
+    String niveauChoisi;
     
     @Override
     public void start(Stage primaryStage) {
@@ -64,22 +65,11 @@ public class VueController extends Application implements Observer{
             ecranAccueil.setPrefSize(500, 500);
             accueil.getChildren().add(ecranAccueil);
 
-            // Bouton Jouer
-            Button btnJouer = new Button("Jouer !");    
-            btnJouer.setPrefSize(120, 60);
-            btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
-
-            btnJouer.setOnAction(e -> primaryStage.setScene(sceneJeu));
-            btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
-            btnJouer.setOnMouseExited(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-color:white;-fx-text-fill: #830601;"));
-
-
 
             // Titre
             Text titre = new Text("PUZZLE GAME");
             titre.setStyle("-fx-background-color:yellow;");
             titre.setFont(new Font("Footlight MT Light",50));
-            BorderPane.setAlignment(titre, Pos.TOP_CENTER);
 
 
 
@@ -98,15 +88,26 @@ public class VueController extends Application implements Observer{
                     "4",
                     "5" 
                 );   
-
-
-                //int niveauChoisi = Integer.parseInt(choixNiveau.getText()); // pourra permettre d'appeller la bonne grille
+         
 
                 HBox niveau = new HBox();
                 niveau.getChildren().add(choixNiveau);
                 niveau.getChildren().add(listeNiveaux);
                 niveau.setAlignment(Pos.CENTER);
                 niveau.setSpacing(40);
+                
+            // Bouton Jouer
+            Button btnJouer = new Button("Jouer !");    
+            btnJouer.setPrefSize(120, 60);
+            btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
+
+            btnJouer.setOnAction(e -> { primaryStage.setScene(sceneJeu);
+                                        niveauChoisi = String.valueOf(listeNiveaux.getValue()); 
+                                        System.out.println("niveau choisi : "+ niveauChoisi);
+                                      });
+            
+            btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
+            btnJouer.setOnMouseExited(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-color:white;-fx-text-fill: #830601;"));
 
             // Menu 
             VBox menu = new VBox();
@@ -123,6 +124,9 @@ public class VueController extends Application implements Observer{
         //Instanciation du modèle
         Model m = new Model();
         m.addObserver(this); // Obervation du modèle par la vue
+        
+     
+   
         
         m.creerGrille(5,5); // crée Grille via modele
         m.creerChemin(); // crée chemin vide via modèle
@@ -190,78 +194,84 @@ public class VueController extends Application implements Observer{
         //grille.setPrefSize(300,300);
         
         
+        // Création de la Grille en fonction du niveau
+            
         
-        // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
-        int longueurGrille = 5; // a modifier
-        int largeurGrille = 5; // rendre dynamique
-        
-        // création d'un tableau de conteneur d'image
-        ConteneurImageCase = new ImageView[longueurGrille][largeurGrille];
-        
-        // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
-            for (int column = 0; column < longueurGrille; column++) {
-                for (int row = 0; row < largeurGrille; row++) {
+            
+                    // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
+                    int longueurGrille = 5; // a modifier
+                    int largeurGrille = 5; // rendre dynamique
 
-                    final int fColumn = column;
-                    final int fRow = row;
+                    // création d'un tableau de conteneur d'image
+                    ConteneurImageCase = new ImageView[longueurGrille][largeurGrille];
 
-                    ImageView imageView;
-                    
-                    if ((column == 0 && row == 0) || (column == longueurGrille -1 && row == largeurGrille -1)) {
-                        
-                            // image symbole en début et fin de tableau
-                            //création d'un conteneur d'img + ajout image dedans
-                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
-                            //Pane root = new Pane();//UN NOUVEAU PANEL ?
-                            //root.getChildren().add(imageView);
-                            ConteneurImageCase[column][row] = imageView;
-                            grille.add(ConteneurImageCase[column][row], column, row);
-                    } else {
+                    // insertion des images dans le tableau de conteneur d'images + listener Drag & Drop sur chaque conteneur
+                        for (int column = 0; column < longueurGrille; column++) {
+                            for (int row = 0; row < largeurGrille; row++) {
 
-                        //remplissage des autres cases par la même image vide
-                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
-                            //Pane root = new Pane();
-                            //root.getChildren().add(imageView);
-                            ConteneurImageCase[column][row] = imageView;
-                            grille.add(ConteneurImageCase[column][row], column, row);
-                            
-                    }
-                    
-                    //TODO : instancier le plateau de jeu selon une grille prédéfinie (grille statique pour le moment)
+                                final int fColumn = column;
+                                final int fRow = row;
+
+                                ImageView imageView;
+
+                                if ((column == 0 && row == 0) || (column == longueurGrille -1 && row == largeurGrille -1)) {
+
+                                        // image symbole en début et fin de tableau
+                                        //création d'un conteneur d'img + ajout image dedans
+                                        imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
+                                        //Pane root = new Pane();//UN NOUVEAU PANEL ?
+                                        //root.getChildren().add(imageView);
+                                        ConteneurImageCase[column][row] = imageView;
+                                        grille.add(ConteneurImageCase[column][row], column, row);
+                                } else {
+
+                                    //remplissage des autres cases par la même image vide
+                                        imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
+                                        //Pane root = new Pane();
+                                        //root.getChildren().add(imageView);
+                                        ConteneurImageCase[column][row] = imageView;
+                                        grille.add(ConteneurImageCase[column][row], column, row);
+
+                                }
+
+                                //TODO : instancier le plateau de jeu selon une grille prédéfinie (grille statique pour le moment)
 
 
-                    //Drag & Drop
+                                //Drag & Drop
 
-                        imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
-                            public void handle(MouseEvent event) {
-                                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                                ClipboardContent content = new ClipboardContent();       
-                                content.putString(""); // non utilisÃ© actuellement
-                                db.setContent(content);
-                                event.consume();
-                                m.startDD(fColumn, fRow);
+                                    imageView.setOnDragDetected(new EventHandler<MouseEvent>() {
+                                        public void handle(MouseEvent event) {
+                                            Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                                            ClipboardContent content = new ClipboardContent();       
+                                            content.putString(""); // non utilisÃ© actuellement
+                                            db.setContent(content);
+                                            event.consume();
+                                            m.startDD(fColumn, fRow);
+                                        }
+                                    });
+
+                                    imageView.setOnDragEntered(new EventHandler<DragEvent>() {
+                                        public void handle(DragEvent event) {
+                                            m.parcoursDD(fColumn, fRow);
+                                            event.consume();
+                                        }
+                                    });
+
+                                    imageView.setOnDragDone(new EventHandler<DragEvent>() {
+                                        public void handle(DragEvent event) {
+
+                                            // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
+                                            //|->??
+
+                                            m.stopDD(fColumn, fRow);
+                                        }
+                                    }
+                                );
                             }
-                        });
-
-                        imageView.setOnDragEntered(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-                                m.parcoursDD(fColumn, fRow);
-                                event.consume();
-                            }
-                        });
-
-                        imageView.setOnDragDone(new EventHandler<DragEvent>() {
-                            public void handle(DragEvent event) {
-
-                                // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
-                                //|->??
-
-                                m.stopDD(fColumn, fRow);
-                            }
-                        }
-                    );
                 }
-            }
+
+
+            
             
         border.setCenter(grille);
         grille.setGridLinesVisible(true);
