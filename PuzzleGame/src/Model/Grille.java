@@ -14,8 +14,8 @@ import java.util.Observable;
 
 public class Grille extends Observable{
     
-    int lo;
-    int la;
+    int nbLignes;
+    int nbColonnes;
     public Case[][] plateauJeu;
     private final String [][] patron1 = {   {"S1","CC","CC","CC"},
                                             {"S2","CC","CC","CC"},
@@ -51,24 +51,27 @@ public class Grille extends Observable{
                                         
                                         };
     
-    
+    /**
+     * Crée un objet grille selon le niveau choisi
+     * @param niveau
+     */
     public Grille(String niveau){
-        lo = 1;
-        la = 1;
+        nbLignes = 1;
+        nbColonnes = 1;
         if(niveau.equals("1")){
-            la = patron1[1].length;
-            lo = patron1.length;
+            nbColonnes = patron1[1].length;
+            nbLignes = patron1.length;
             
-            this.plateauJeu = new Case[lo][la];
+            this.plateauJeu = new Case[nbLignes][nbColonnes];
         
-            for(int i =0 ; i < lo ; i++){
-                for(int j =0 ; j < la ; j++){
+            for(int i =0 ; i < nbLignes ; i++){
+                for(int j =0 ; j < nbColonnes ; j++){
                     switch (patron1[i][j]) {
                         case "S1":
-                            this.plateauJeu[i][j] = new CaseSymbole(i,j);
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron1[i][j]);
                             break;
                         case "S2":
-                            this.plateauJeu[i][j] = new CaseSymbole(i,j);
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron1[i][j]);
                             break;
                         default:
                             this.plateauJeu[i][j] = new CaseChemin(i,j);
@@ -78,19 +81,19 @@ public class Grille extends Observable{
             }
         }
         if(niveau.equals("2")){
-            la = patron2[1].length;
-            lo = patron2.length;
+            nbColonnes = patron2[1].length;
+            nbLignes = patron2.length;
             
-            this.plateauJeu = new Case[lo][la];
+            this.plateauJeu = new Case[nbLignes][nbColonnes];
         
-            for(int i =0 ; i < lo ; i++){
-                for(int j =0 ; j < la ; j++){
+            for(int i = 0 ; i < nbLignes ; i++){
+                for(int j = 0 ; j < nbColonnes ; j++){
                     switch (patron2[i][j]) {
                         case "S1":
-                            this.plateauJeu[i][j] = new CaseSymbole(i,j);
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron2[i][j]);
                             break;
                         case "S2":
-                            this.plateauJeu[i][j] = new CaseSymbole(i,j);
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron2[i][j]);
                             break;
                         default:
                             this.plateauJeu[i][j] = new CaseChemin(i,j);
@@ -100,37 +103,45 @@ public class Grille extends Observable{
             }
         }
         if(niveau.equals("3")){
-            la = patron3[1].length;
-            lo = patron3.length;
+            nbColonnes = patron3[1].length;
+            nbLignes = patron3.length;
             
-            this.plateauJeu = new Case[lo][la];
+            this.plateauJeu = new Case[nbLignes][nbColonnes];
         
-            for(int i =0 ; i < lo ; i++){
-                for(int j =0 ; j < la ; j++){
-                    if (patron3[i][j].equals("S1")) {
-                        this.plateauJeu[i][j] = new CaseSymbole(i,j);
-                    } else if (patron3[i][j].equals("S2")){
-                        this.plateauJeu[i][j] = new CaseSymbole(i,j);
-                    } else{
-                        this.plateauJeu[i][j] = new CaseChemin(i,j);
+            for(int i =0 ; i < nbLignes ; i++){
+                for(int j =0 ; j < nbColonnes ; j++){
+                    switch (patron3[i][j]) {
+                        case "S1":
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron3[i][j]);
+                            break;
+                        case "S2":
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron3[i][j]);
+                            break;
+                        default:
+                            this.plateauJeu[i][j] = new CaseChemin(i,j);
+                            break;
                     }
                 }
             }
         }
         if(niveau.equals("4")){
-            la = patron4[1].length;
-            lo = patron4.length;
+            nbColonnes = patron4[1].length;
+            nbLignes = patron4.length;
             
-            this.plateauJeu = new Case[lo][la];
+            this.plateauJeu = new Case[nbLignes][nbColonnes];
         
-            for(int i =0 ; i < lo ; i++){
-                for(int j =0 ; j < la ; j++){
-                    if (patron4[i][j].equals("S1")) {
-                        this.plateauJeu[i][j] = new CaseSymbole(i,j);
-                    } else if (patron4[i][j].equals("S2")){
-                        this.plateauJeu[i][j] = new CaseSymbole(i,j);
-                    } else{
-                        this.plateauJeu[i][j] = new CaseChemin(i,j);
+            for(int i =0 ; i < nbLignes ; i++){
+                for(int j =0 ; j < nbColonnes ; j++){
+                    switch (patron4[i][j]) {
+                        case "S1":
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron4[i][j]);
+                            break;
+                        case "S2":
+                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron4[i][j]);
+                            break;
+                        default:
+                            this.plateauJeu[i][j] = new CaseChemin(i,j);
+                            break;
                     }
                 }
             }
@@ -141,8 +152,8 @@ public class Grille extends Observable{
     }
     
     public boolean puzzleResolu(){
-        for(int i =0 ; i < lo ; i++){
-            for(int j =0 ; j < la ; j++){
+        for(int i =0 ; i < nbLignes ; i++){
+            for(int j =0 ; j < nbColonnes ; j++){
                 if(this.plateauJeu[i][j].estLibre()) return(false);
             }
         }
@@ -150,10 +161,10 @@ public class Grille extends Observable{
     }
     
     public int getLo(){
-        return this.lo;
+        return this.nbLignes;
     }
     
     public int getLa(){
-        return this.la;
+        return this.nbColonnes;
     }
 }

@@ -30,7 +30,7 @@ public abstract class Case extends Observable{
     protected String img;
     
     
-    protected Case(int cX, int rY){
+    protected Case(int rY, int cX){
         this.x = cX;
         this.y = rY;
         this.libre = true;

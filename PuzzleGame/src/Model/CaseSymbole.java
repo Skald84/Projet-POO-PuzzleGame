@@ -17,18 +17,29 @@ package Model;
 public class CaseSymbole extends Case{
     
     private enum symbole {
-        S1, TRIANGLE, CARRE, CERCLE
+        S1, S2
     }
     
     private symbole s;
     
-    protected CaseSymbole(int x, int y) {
+    protected CaseSymbole(int x, int y, String typeSymbole) {
       super(x, y);
-      this.s = symbole.S1;
+        System.out.println(typeSymbole);
+      switch (typeSymbole) {
+            case "S1":
+                this.s = symbole.S1;
+                break;
+            case "S2":
+                this.s = symbole.S2;
+                break;
+            default:
+              this.s = null;
+        }
+        System.out.println(this.s);
       setCaseImg();
     }
-
-    /**
+      
+      /**
      * Cette méthode permet d'accéder au symbole de l'objet
      * 
      * @authors
@@ -58,9 +69,7 @@ public class CaseSymbole extends Case{
     
     private void setCaseImg(){
         if (this.s == symbole.S1) img = "/images/S1.png";
-        if (this.s == symbole.S1) img = "/images/S1.png";
-        if (this.s == symbole.S1) img = "/images/S1.png";
-        if (this.s == symbole.S1) img = "/images/S1.png";
-        else img = "/images/ERREUR.png";
+        if (this.s == symbole.S2) img = "/images/S2.png";
+        
     }
 }
