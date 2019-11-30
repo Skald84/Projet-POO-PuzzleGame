@@ -210,7 +210,7 @@ public class VueController extends Application implements Observer{
 
                                                                             // image symbole en début et fin de tableau
                                                                             // création d'un conteneur d'img + ajout image dedans
-                                                                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/ERREUR.png")));
+                                                                            imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S2.png")));
                                                                             ConteneurImageCase[row][column] = imageView;
                                                                             grille.add(ConteneurImageCase[row][column], row, column);
                                                                     } else {
