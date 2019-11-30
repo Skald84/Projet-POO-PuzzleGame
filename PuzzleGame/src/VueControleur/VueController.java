@@ -91,11 +91,15 @@ public class VueController extends Application implements Observer{
                     "4",
                     "5" 
                 );   
-         
+                
+                
+            // Infos
+            Button infos = new Button("Infos");
+            infos.setOnAction(e-> {Dialogs.create().owner(primaryStage).title("Information Dialog").masthead("Look, an Information Dialog").message("I have a great message for you!").showInformation();});
+                     
 
                 HBox niveau = new HBox();
-                niveau.getChildren().add(choixNiveau);
-                niveau.getChildren().add(listeNiveaux);
+                niveau.getChildren().addAll(choixNiveau,listeNiveaux);
                 niveau.setAlignment(Pos.CENTER);
                 niveau.setSpacing(40);
                 
@@ -103,6 +107,14 @@ public class VueController extends Application implements Observer{
             Button btnJouer = new Button("Jouer !");    
             btnJouer.setPrefSize(120, 60);
             btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
+            
+            
+            
+            // Menu 
+            VBox menu = new VBox();
+            menu.getChildren().addAll(titre,niveau,btnJouer,infos);
+            menu.setAlignment(Pos.CENTER);
+            menu.setSpacing(60);
 
             // click sur bouton jouer qui déclenche la partie !
             btnJouer.setOnAction(e -> { primaryStage.setScene(sceneJeu);
@@ -382,18 +394,11 @@ public class VueController extends Application implements Observer{
             btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
             btnJouer.setOnMouseExited(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-color:white;-fx-text-fill: #830601;"));
 
-            // Menu 
-            VBox menu = new VBox();
-            menu.getChildren().addAll(titre,niveau,btnJouer);
-            menu.setAlignment(Pos.CENTER);
-            menu.setSpacing(60);
+            
 
             BorderPane.setAlignment(menu, Pos.TOP_CENTER);
             ecranAccueil.setCenter(menu);
             
-            // Infos
-            Button infos = new Button();
-            infos.setOnAction(e-> {Dialogs.create().owner(primaryStage).title("Information Dialog").masthead("Look, an Information Dialog").message("I have a great message for you!").showInformation();});
             
                    
         // Gestion de la Fenetre
