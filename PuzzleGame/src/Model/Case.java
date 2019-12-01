@@ -5,8 +5,6 @@
  */
 package Model;
 
-import java.util.Observable;
-
     /** Représente les cases (i.e. en général) qui composent la grille
      * 
      * @authors
@@ -16,7 +14,7 @@ import java.util.Observable;
      * @since
      *          1.0
      */
-public abstract class Case extends Observable{
+public abstract class Case{
     
     protected final int x;
     protected final int y;
