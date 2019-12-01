@@ -23,7 +23,7 @@ public abstract class Case{
     protected String img = "/images/LIBRE.png";
     
     
-    protected Case(int rY, int cX){
+    public Case(int rY, int cX){
         this.x = cX;
         this.y = rY;
         this.libre = true;

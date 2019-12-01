@@ -16,13 +16,9 @@ package Model;
      */
 public class CaseSymbole extends Case{
     
-    private enum symbole {
-        S1, S2
-    }
-    
     private symbole s;
     
-    protected CaseSymbole(int x, int y, String typeSymbole) {
+    public CaseSymbole(int x, int y, String typeSymbole) {
       super(x, y);
         System.out.println(typeSymbole);
       switch (typeSymbole) {
@@ -69,5 +65,9 @@ public class CaseSymbole extends Case{
     private void setCaseImg(){
         if (this.s == symbole.S1) img = "/images/S1.png";
         if (this.s == symbole.S2) img = "/images/S2.png";    
+    }
+    
+    private enum symbole {
+        S1, S2
     }
 }

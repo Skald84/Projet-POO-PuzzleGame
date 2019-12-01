@@ -16,7 +16,7 @@ package Model;
      */
 public class CaseChemin extends Case{
     
-    protected voisin voisin1;
+    private voisin voisin1;
     private voisin voisin2;
     
     /** Ce constructeur créé une case chemin à partir de ses position en x et en y
@@ -32,7 +32,7 @@ public class CaseChemin extends Case{
      * @since
      *          1.0
      */
-    protected CaseChemin(int cX, int rY) {
+    public CaseChemin(int cX, int rY) {
         super(cX, rY);
         this.img = "/images/LIBRE.png";
         this.voisin1 = voisin.LIBRE;
@@ -127,7 +127,7 @@ public class CaseChemin extends Case{
         this.setCaseImg();
     }
     
-    public void setCaseImg(){
+    private void setCaseImg(){
         if (this.voisin1 == voisin.LIBRE && this.voisin2 == voisin.LIBRE) this.img = "/images/LIBRE.png";
         else if (this.voisin1 == voisin.N && this.voisin2 == voisin.LIBRE) this.img = "/images/N.png";
         else if (this.voisin1 == voisin.E && this.voisin2 == voisin.LIBRE) this.img = "/images/E.png";
@@ -142,7 +142,7 @@ public class CaseChemin extends Case{
         else this.img = "/images/ERREUR.png";//si voisin1 est libre et voisins2 ne l'est pas par exemple...
     }
     
-        /**
+    /**
      * Cette méthode permet de déterminer si l'objet est voisin par rapport à une autre Case
      * 
      * @authors
@@ -175,7 +175,7 @@ public class CaseChemin extends Case{
      * @since
      *          1.0
      */
-    protected boolean estVoisinParLeNord(Case c2){
+    private boolean estVoisinParLeNord(Case c2){
         return x == c2.getX() && y-1 == c2.getY();
     }
     
@@ -193,7 +193,7 @@ public class CaseChemin extends Case{
      * @since
      *          1.0
      */
-    protected boolean estVoisinParLEst(Case c2){
+    private boolean estVoisinParLEst(Case c2){
         return x+1 == c2.getX() && y == c2.getY();
     }
     
@@ -211,7 +211,7 @@ public class CaseChemin extends Case{
      * @since
      *          1.0
      */
-    protected boolean estVoisinParLeSud(Case c2){
+    private boolean estVoisinParLeSud(Case c2){
         return x == c2.getX() && y+1 == c2.getY();
     }
 
@@ -229,11 +229,11 @@ public class CaseChemin extends Case{
      * @since
      *          1.0
      */
-    protected boolean estVoisinParLOuest(Case c2){
+    private boolean estVoisinParLOuest(Case c2){
         return x-1 == c2.getX() && y == c2.getY();
     }
     
-        protected enum voisin {
+    protected enum voisin {
         LIBRE, N, E, S, O
     }
 }
