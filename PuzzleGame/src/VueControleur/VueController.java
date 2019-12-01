@@ -6,16 +6,11 @@
 package VueControleur;
 
 import Model.Case;
-import Model.Grille;
 import Model.Model;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,11 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -38,14 +29,10 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  *
@@ -59,9 +46,6 @@ public class VueController extends Application implements Observer{
     
     @Override
     public void start(Stage primaryStage) {
-        
-        
-        
         
         //Gestion ecranJeu d'accueil
             Group accueil = new Group();
@@ -113,7 +97,7 @@ public class VueController extends Application implements Observer{
             // Bouton Jouer
             Button btnJouer = new Button("Jouer !");    
             btnJouer.setPrefSize(140, 70);
-            btnJouer.setStyle("-fx-font-size: 30px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
+            btnJouer.setStyle("-fx-font-size: 30px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;-fx-background-color:white;-fx-text-fill: #830601;");
             
             // Menu 
             VBox menu = new VBox();
@@ -129,10 +113,47 @@ public class VueController extends Application implements Observer{
             BorderPane.setAlignment(menu, Pos.TOP_CENTER);
             ecranAccueil.setCenter(menu);
 
-            // click sur bouton jouer qui déclenche la partie !
-            btnJouer.setOnAction(e -> { 
-                                                  
-                                        //Initialisation de la fenêtre principale
+            // click sur bouton jouer qui déclenche la partie (appelle la fonction lancerPartie avec en param le niveau choisi)
+            btnJouer.setOnAction(e -> {
+                                        niveauChoisi = String.valueOf(listeNiveaux.getValue()); 
+                                        System.out.println("niveau choisi : " + listeNiveaux.getValue());
+                                        lancerPartie(primaryStage, niveauChoisi);
+                                      });
+                                                       
+        // Gestion de la Fenetre
+        primaryStage.setTitle("Puzzle Game !!!!");
+        primaryStage.setScene(sceneAccueil);
+        primaryStage.setResizable(false);//ne permet plus de redimensionner la fenêtre
+        primaryStage.centerOnScreen();//affiche la fenêtre au centre de l'écran
+        primaryStage.show();
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+        //on récupère le second argument ("arg"), qu'on cast en case, pour enfin récuperer ses coordonnées
+        //le premier argument, "o",  est l'observable, ici "model")
+        Case c = (Case) arg;
+        int x = c.getX();
+        int y = c.getY();
+        
+        //On peut ainsi rafraîchir la représentation de la case en récupérant le chemin absolu de son imgage, puis
+        //On met à jour l'image associé dans le conteneur d'image
+        //Gridpane + tableau d'image, est ce vraiment nécessaire ?
+        String pathCaseImg = c.getImage();
+        ConteneurImageCase[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
+       
+    }
+    
+    public void lancerPartie(Stage primaryStage, String niveauChoisi){
+        //Initialisation de la fenêtre principale
 
                                             Group jeu = new Group();
                                             Scene sceneJeu = new Scene(jeu, 800, 800);
@@ -143,11 +164,26 @@ public class VueController extends Application implements Observer{
                                            
                                             //initialisation de la grilleVue
                                             GridPane grilleVue = new GridPane();
-                                            
-                                            
-                                            
+
                                             Button btnRègles = new Button("Règles du jeu");
+                                            btnRègles.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;-fx-background-color:#830601;-fx-text-fill: white;");
+                                            btnRègles.setOnMouseEntered(e -> btnRègles.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-text-fill: #830601;"));
+                                            btnRègles.setOnMouseExited(e -> btnRègles.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-color:white;-fx-text-fill: white;"));
+                                            btnRègles.setOnMouseClicked(e -> {
+                                                                                Alert dialog = new Alert(AlertType.INFORMATION);
+                                                                                dialog.setTitle("Règles du jeu");
+                                                                                dialog.setHeaderText("Les règles sont les suivantes:\n"+"\t\t- Vous devez relier chaque paire de symbole\n" 
+                                                                                                     + "\t\t- Chaque case doit être utilisée\n" +"\t\t- Les chemins ne peuvent pas se croiser\n\n\n"
+                                                                                                     + "\t\t\t\t\tBonne chance !");
+                                                                                dialog.show();
+                                                                             });
+                                            
                                             Button btnRetourAccueil = new Button("Retour au menu");
+                                            btnRetourAccueil.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;-fx-background-color:#830601;-fx-text-fill: white;");
+                                            btnRetourAccueil.setOnMouseEntered(e -> btnRetourAccueil.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-text-fill: #830601;"));
+                                            btnRetourAccueil.setOnMouseExited(e -> btnRetourAccueil.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-color:white;-fx-text-fill: white;"));
+                                            btnRetourAccueil.setOnMouseClicked(e -> start(primaryStage));
+                                            
                                             
                                             // Menu 
                                             VBox options = new VBox();
@@ -156,20 +192,12 @@ public class VueController extends Application implements Observer{
                                             options.setSpacing(60);
                                             BorderPane.setAlignment(options, Pos.CENTER_RIGHT);
                                             ecranJeu.setRight(options);
-                                            
-                                            
-            
-                                            niveauChoisi = String.valueOf(listeNiveaux.getValue()); 
-                                            System.out.println("niveau choisi : " + listeNiveaux.getValue());
-                                            
-                                            
+
                                                                                
                                             //Instanciation du modèle
                                             Model m = new Model();
                                             m.addObserver(this); // Obervation du modèle par la vue
 
-                                            
-                                            
                                             // Création de la Grille en fonction du niveau
                                             int nbLignes; 
                                             int nbColonnes; 
@@ -387,48 +415,7 @@ public class VueController extends Application implements Observer{
                                         m.creerGrille(niveauChoisi); // crée Grille via modele
                                         ecranJeu.setCenter(grilleVue);
                                         grilleVue.setGridLinesVisible(true);
-                                        Alert dialog = new Alert(AlertType.INFORMATION);
-                                        dialog.setTitle("Règles du jeu");
-                                        dialog.setHeaderText("Les règles sont les suivantes:\n"+"\t\t- Vous devez relier chaque paire de symbole\n" + "\t\t- Chaque case doit être utilisée\n" +"\t\t- Les chemins ne peuvent pas se croiser\n\n\n"
-                                                             + "\t\t\t\t\tBonne chance !");
-                                        dialog.showAndWait();
-    
-                                    });
-            
-           
-            
-            
-                   
-        // Gestion de la Fenetre
-        primaryStage.setTitle("Puzzle Game !!!!");
-        primaryStage.setScene(sceneAccueil);
-        primaryStage.setResizable(false);//ne permet plus de redimensionner la fenêtre
-        primaryStage.centerOnScreen();//affiche la fenêtre au centre de l'écran
-        primaryStage.show();
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
+                                            
+                                    }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        
-        //on récupère le second argument ("arg"), qu'on cast en case, pour enfin récuperer ses coordonnées
-        //le premier argument, "o",  est l'observable, ici "model")
-        Case c = (Case) arg;
-        int x = c.getX();
-        int y = c.getY();
-        
-        //On peut ainsi rafraîchir la représentation de la case en récupérant le chemin absolu de son imgage, puis
-        //On met à jour l'image associé dans le conteneur d'image
-        //Gridpane + tableau d'image, est ce vraiment nécessaire ?
-        String pathCaseImg = c.getImage();
-        ConteneurImageCase[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
-       
-    }
-    
-}
