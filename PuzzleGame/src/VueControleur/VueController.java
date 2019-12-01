@@ -19,8 +19,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -72,31 +75,38 @@ public class VueController extends Application implements Observer{
             // Titre
             Text titre = new Text("PUZZLE GAME");
             titre.setStyle("-fx-background-color:yellow;");
-            titre.setFont(new Font("Footlight MT Light",50));
-
-
-
+            titre.setFont(new Font("Footlight MT Light",90));
+            
             // Choix du niveau
                 // Label
                 Label choixNiveau = new Label("Niveau");
-                choixNiveau.setFont(new Font("Century Gothic",20));
+                choixNiveau.setFont(new Font("Century Gothic",30));
 
                 // ComboBox
                 ComboBox listeNiveaux = new ComboBox();
-                listeNiveaux.setStyle("-fx-background-color:white;-fx-font: 20px \"Century Gothic\";");
+                listeNiveaux.setStyle("-fx-background-color:white;-fx-font: 30px \"Century Gothic\";");
                 listeNiveaux.getItems().addAll(
                     "1",
                     "2",
-                    "3",
-                    "4",
-                    "5" 
+                    "3"
                 );   
-                
+                listeNiveaux.setValue("1");
                 
             // Infos
-            Button infos = new Button("Infos");
-            infos.setOnAction(e-> {Dialogs.create().owner(primaryStage).title("Information Dialog").masthead("Look, an Information Dialog").message("I have a great message for you!").showInformation();});
-                     
+            Button infos = new Button("à propos de ce programme");
+            infos.setOnAction(e-> {
+            
+                                    Alert dialog = new Alert(AlertType.INFORMATION);
+                                    dialog.setTitle("à propos");
+                                    dialog.setHeaderText("Ce programme a été développé par Gérome FERRAND & Aymeric TOUCHE\n");
+                                    dialog.setContentText("Nous avons utilisé l'IDE  NetBeans pour coder ainsi que gitHub afin de gérer nos différentes version\n"
+                                                         + "Ce projet à été réalisé en quelques semaines pour l'UE Algo et Programmation Orientée Objet");
+                                    dialog.showAndWait();
+            });
+            BorderPane.setAlignment(infos,Pos.BOTTOM_CENTER);
+            ecranAccueil.setBottom(infos);
+            infos.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;-fx-background-color:black;-fx-text-fill: white;");
+           
 
                 HBox niveau = new HBox();
                 niveau.getChildren().addAll(choixNiveau,listeNiveaux);
@@ -105,14 +115,12 @@ public class VueController extends Application implements Observer{
                 
             // Bouton Jouer
             Button btnJouer = new Button("Jouer !");    
-            btnJouer.setPrefSize(120, 60);
-            btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
-            
-            
+            btnJouer.setPrefSize(140, 70);
+            btnJouer.setStyle("-fx-font-size: 30px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;");
             
             // Menu 
             VBox menu = new VBox();
-            menu.getChildren().addAll(titre,niveau,btnJouer,infos);
+            menu.getChildren().addAll(titre,niveau,btnJouer);
             menu.setAlignment(Pos.CENTER);
             menu.setSpacing(60);
 
@@ -150,13 +158,13 @@ public class VueController extends Application implements Observer{
 
 
                                             // Création de la Grille en fonction du niveau
-                                            int nbLignes; // a modifier
-                                            int nbColonnes; // rendre dynamique
+                                            int nbLignes; 
+                                            int nbColonnes; 
                                                         
                                             m.creerChemin(); // crée chemin vide via modèle
 
 
-                                                        // fixe les dimensions du tableau en fonction de l'objet statique Grille (possibilité de fusionner avec déclaration suivante)
+                                                        // instancie une grlle du coté de la vue selon le niveau de jeu choisi
                                                         switch(niveauChoisi) {
                                                             case "1":
                                                                 nbLignes = 4;
@@ -171,7 +179,6 @@ public class VueController extends Application implements Observer{
 
                                                                             final int fColumn = column;
                                                                             final int fRow = row;
-
                                                                             ImageView imageView;
 
                                                                             if ((row == 0 && column == 0) || (row == nbLignes -1 && column == nbColonnes -1)) {
@@ -194,7 +201,6 @@ public class VueController extends Application implements Observer{
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
                                                                                     grille.add(ConteneurImageCase[row][column], row, column);
-
                                                                             }
                                                                             // Drag & Drop
 
@@ -218,19 +224,15 @@ public class VueController extends Application implements Observer{
 
                                                                                 imageView.setOnDragDone(new EventHandler<DragEvent>() {
                                                                                     public void handle(DragEvent event) {
-
-                                                                                        // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
-                                                                                        //|->??
-
                                                                                         m.stopDD(fRow, fColumn);
                                                                                     }
                                                                                 }
                                                                             );
                                                                         }
                                                                     }
-                                                                    
                                                                 break;
-                                                              case "2":
+                                                                
+                                                            case "2":
                                                                 nbLignes = 4; 
                                                                 nbColonnes = 5; // 
                                                                 
@@ -243,11 +245,7 @@ public class VueController extends Application implements Observer{
 
                                                                             final int fColumn = column;
                                                                             final int fRow = row;
-
                                                                             ImageView imageView;
-                                                                            
-
-                                                                            
 
                                                                             if ((row == 0 && column == 0) || (row == 0 && column == nbColonnes -1)) {
 
@@ -269,7 +267,6 @@ public class VueController extends Application implements Observer{
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
                                                                                     grille.add(ConteneurImageCase[row][column], row, column);
-
                                                                             }
                                                                             // Drag & Drop
 
@@ -293,22 +290,17 @@ public class VueController extends Application implements Observer{
 
                                                                                 imageView.setOnDragDone(new EventHandler<DragEvent>() {
                                                                                     public void handle(DragEvent event) {
-
-                                                                                        // attention, le setOnDragDone est dÃ©clenchÃ© par la source du Drag&Drop
-                                                                                        //|->??
-
                                                                                         m.stopDD(fRow, fColumn);
                                                                                     }
                                                                                 }
                                                                             );
                                                                         }
-                                                                    }
-                                                                
-                                                                
+                                                                    }                                                        
                                                                 break;
-                                                              case "3":
+                                                                
+                                                            case "3":
                                                                 nbLignes = 5; // a modifier
-                                                                nbColonnes = 5; // rendre dynamique
+                                                                nbColonnes = 6; // rendre dynamique
                                                                 
                                                                 // création d'un tableau de conteneur d'image
                                                                 ConteneurImageCase = new ImageView[nbLignes][nbColonnes];
@@ -319,20 +311,16 @@ public class VueController extends Application implements Observer{
 
                                                                             final int fColumn = column;
                                                                             final int fRow = row;
-
                                                                             ImageView imageView;
                                                                             
-                                                                            
-                                                                            
-                                                                    
-                                                                            if ((row == 2 && column == 3) || (row == 3  && column == column-1)) {
+                                                                            if ((row == 2 && column == 3) || (row == 3  && column == nbColonnes-1)) {
 
                                                                                     // image symbole en début et fin de tableau
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
                                                                                     grille.add(ConteneurImageCase[row][column], row, column);
-                                                                            } else if (row == nbLignes-1 && column == 0 || (row == 0 && column == 3)) {
+                                                                            } else if (row == nbLignes-1 && column == 0 || (row == 2 && column == nbColonnes-1)) {
 
                                                                                     // image symbole en début et fin de tableau
                                                                                     // création d'un conteneur d'img + ajout image dedans
@@ -375,13 +363,12 @@ public class VueController extends Application implements Observer{
 
                                                                                         m.stopDD(fRow, fColumn);
                                                                                     }
-                                                                                }
-                                                                            );
+                                                                                });
                                                                         }
                                                                     }
                                                                 break;
                                                               default:
-                                                                nbLignes = 6; // a modifier
+                                                                nbLignes = 5; // a modifier
                                                                 nbColonnes = 5; // rendre dynamique
                                                             }
                                                         

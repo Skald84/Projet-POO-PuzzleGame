@@ -94,6 +94,7 @@ public class Model extends Observable {
                 chemin.afficheChemin();
         }
         
+        // copie le chemin effectué au bon endroit
         if (chemin == chemin1) {
                 chemin1 = chemin;
             }else{
@@ -178,7 +179,7 @@ public class Model extends Observable {
 
             setChanged();
             notifyObservers(casePointee);
-        //}
+        
     }
     
     private void reinitialisation(Chemin chemin){
