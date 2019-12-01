@@ -60,17 +60,15 @@ public class VueController extends Application implements Observer{
     @Override
     public void start(Stage primaryStage) {
         
-        Group root = new Group();
-        Scene sceneJeu = new Scene(root, 800, 800);
         
         
-        //Gestion ecran d'accueil
+        
+        //Gestion ecranJeu d'accueil
             Group accueil = new Group();
             Scene sceneAccueil = new Scene(accueil, 800, 800);
             BorderPane ecranAccueil = new BorderPane();
             ecranAccueil.setPrefSize(800, 800);
             accueil.getChildren().add(ecranAccueil);
-
 
             // Titre
             Text titre = new Text("PUZZLE GAME");
@@ -95,12 +93,11 @@ public class VueController extends Application implements Observer{
             // Infos
             Button infos = new Button("à propos de ce programme");
             infos.setOnAction(e-> {
-            
                                     Alert dialog = new Alert(AlertType.INFORMATION);
                                     dialog.setTitle("à propos");
                                     dialog.setHeaderText("Ce programme a été développé par Gérome FERRAND & Aymeric TOUCHE\n");
-                                    dialog.setContentText("Nous avons utilisé l'IDE  NetBeans pour coder ainsi que gitHub afin de gérer nos différentes version\n"
-                                                         + "Ce projet à été réalisé en quelques semaines pour l'UE Algo et Programmation Orientée Objet");
+                                    dialog.setContentText("Nous avons utilisé l'IDE  NetBeans pour coder ainsi que gitHub afin de gérer nos différentes versions\n"
+                                                          + "Ce projet à été réalisé en quelques semaines dans le cadre de l'UE Algo et Programmation Orientée Objet de la L3 Info");
                                     dialog.showAndWait();
             });
             BorderPane.setAlignment(infos,Pos.BOTTOM_CENTER);
@@ -123,46 +120,61 @@ public class VueController extends Application implements Observer{
             menu.getChildren().addAll(titre,niveau,btnJouer);
             menu.setAlignment(Pos.CENTER);
             menu.setSpacing(60);
+            
+            btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
+            btnJouer.setOnMouseExited(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-color:white;-fx-text-fill: #830601;"));
+
+            
+
+            BorderPane.setAlignment(menu, Pos.TOP_CENTER);
+            ecranAccueil.setCenter(menu);
 
             // click sur bouton jouer qui déclenche la partie !
-            btnJouer.setOnAction(e -> { primaryStage.setScene(sceneJeu);
-                                        niveauChoisi = String.valueOf(listeNiveaux.getValue()); 
-                                        System.out.println("niveau choisi : " + listeNiveaux.getValue());
+            btnJouer.setOnAction(e -> { 
+                                                  
+                                        //Initialisation de la fenêtre principale
+
+                                            Group jeu = new Group();
+                                            Scene sceneJeu = new Scene(jeu, 800, 800);
+                                            primaryStage.setScene(sceneJeu);
+                                            BorderPane ecranJeu = new BorderPane();
+                                            ecranJeu.setPrefSize(800, 800);
+                                            jeu.getChildren().add(ecranJeu);
+                                           
+                                            //initialisation de la grilleVue
+                                            GridPane grilleVue = new GridPane();
+                                            
+                                            
+                                            
+                                            Button btnRègles = new Button("Règles du jeu");
+                                            Button btnRetourAccueil = new Button("Retour au menu");
+                                            
+                                            // Menu 
+                                            VBox options = new VBox();
+                                            options.getChildren().addAll(btnRègles,btnRetourAccueil);
+                                            options.setAlignment(Pos.CENTER);
+                                            options.setSpacing(60);
+                                            BorderPane.setAlignment(options, Pos.CENTER_RIGHT);
+                                            ecranJeu.setRight(options);
+                                            
+                                            
+            
+                                            niveauChoisi = String.valueOf(listeNiveaux.getValue()); 
+                                            System.out.println("niveau choisi : " + listeNiveaux.getValue());
+                                            
+                                            
                                                                                
                                             //Instanciation du modèle
                                             Model m = new Model();
                                             m.addObserver(this); // Obervation du modèle par la vue
 
-                                            //Initialisation de la fenêtre principale
-                                            BorderPane border = new BorderPane();
-
-                                            HBox menuHaut = new HBox(100);
-                                            border.setTop(menuHaut);
-
-                                            VBox menuGauche = new VBox(100);
-                                            border.setLeft(menuGauche);
-
-                                            VBox menuDroit = new VBox(100);
-                                            border.setRight(menuDroit);
-
-                                            HBox menuBas = new HBox(100);
-                                            border.setBottom(menuBas);
-
-                                            root.getChildren().add(border);
-
-                                            //initialisation de la grille
-                                            grille = new GridPane();
-                                            border.setCenter(grille);
-                                            BorderPane.setAlignment(grille, Pos.CENTER);
-                                            //grille.setPrefSize(300,300);
-
-
+                                            
+                                            
                                             // Création de la Grille en fonction du niveau
                                             int nbLignes; 
                                             int nbColonnes; 
                                                         
                                             m.creerChemin(); // crée chemin vide via modèle
-
 
                                                         // instancie une grlle du coté de la vue selon le niveau de jeu choisi
                                                         switch(niveauChoisi) {
@@ -187,20 +199,20 @@ public class VueController extends Application implements Observer{
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             } else if ((row == 0 && column == 1) || (row == 2 && column == 3)) {
 
                                                                                     // image symbole en début et fin de tableau
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S2.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             } else {
 
                                                                                 // remplissage des autres cases par la même image vide
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             }
                                                                             // Drag & Drop
 
@@ -253,20 +265,20 @@ public class VueController extends Application implements Observer{
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             } else if ((row == 0 && column == 1) || (row == 0 && column == 3)) {
 
                                                                                     // image symbole en début et fin de tableau
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S2.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             } else {
 
                                                                                 // remplissage des autres cases par la même image vide
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             }
                                                                             // Drag & Drop
 
@@ -319,20 +331,20 @@ public class VueController extends Application implements Observer{
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S1.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             } else if (row == nbLignes-1 && column == 0 || (row == 2 && column == nbColonnes-1)) {
 
                                                                                     // image symbole en début et fin de tableau
                                                                                     // création d'un conteneur d'img + ajout image dedans
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/S2.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
                                                                             } else {
 
                                                                                 // remplissage des autres cases par la même image vide
                                                                                     imageView = new ImageView(new Image(VueController.class.getResourceAsStream("/images/LIBRE.png")));
                                                                                     ConteneurImageCase[row][column] = imageView;
-                                                                                    grille.add(ConteneurImageCase[row][column], row, column);
+                                                                                    grilleVue.add(ConteneurImageCase[row][column], row, column);
 
                                                                             }
                                                                             // Drag & Drop
@@ -373,18 +385,17 @@ public class VueController extends Application implements Observer{
                                                             }
                                                         
                                         m.creerGrille(niveauChoisi); // crée Grille via modele
-                                        border.setCenter(grille);
-                                        grille.setGridLinesVisible(true);
+                                        ecranJeu.setCenter(grilleVue);
+                                        grilleVue.setGridLinesVisible(true);
+                                        Alert dialog = new Alert(AlertType.INFORMATION);
+                                        dialog.setTitle("Règles du jeu");
+                                        dialog.setHeaderText("Les règles sont les suivantes:\n"+"\t\t- Vous devez relier chaque paire de symbole\n" + "\t\t- Chaque case doit être utilisée\n" +"\t\t- Les chemins ne peuvent pas se croiser\n\n\n"
+                                                             + "\t\t\t\t\tBonne chance !");
+                                        dialog.showAndWait();
     
                                     });
             
-            btnJouer.setOnMouseEntered(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:#830601;-fx-text-fill: white;"));
-            btnJouer.setOnMouseExited(e -> btnJouer.setStyle("-fx-font-size: 25px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-color:white;-fx-text-fill: #830601;"));
-
-            
-
-            BorderPane.setAlignment(menu, Pos.TOP_CENTER);
-            ecranAccueil.setCenter(menu);
+           
             
             
                    

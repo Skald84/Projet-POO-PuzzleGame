@@ -38,18 +38,7 @@ public class Grille extends Observable{
                                             {"CC","CC","S2","S1","CC"},
                                         
                                         };
-    private final String [][] patron4 = {   {"S1","CC","CC","CC"},
-                                            {"S2","CC","CC","CC"},
-                                            {"CC","CC","CC","CC"},
-                                            {"CC","CC","S2","S1"},
-                                        
-                                        };
-    private final String [][] patron5 = {   {"S1","CC","CC","CC"},
-                                            {"S2","CC","CC","CC"},
-                                            {"CC","CC","CC","CC"},
-                                            {"CC","CC","S2","S1"},
-                                        
-                                        };
+    
     
     /**
      * Crée un objet grille selon le niveau choisi
@@ -124,31 +113,6 @@ public class Grille extends Observable{
                 }
             }
         }
-        if(niveau.equals("4")){
-            nbColonnes = patron4[1].length;
-            nbLignes = patron4.length;
-            
-            this.plateauJeu = new Case[nbLignes][nbColonnes];
-        
-            for(int i =0 ; i < nbLignes ; i++){
-                for(int j =0 ; j < nbColonnes ; j++){
-                    switch (patron4[i][j]) {
-                        case "S1":
-                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron4[i][j]);
-                            break;
-                        case "S2":
-                            this.plateauJeu[i][j] = new CaseSymbole(i,j,patron4[i][j]);
-                            break;
-                        default:
-                            this.plateauJeu[i][j] = new CaseChemin(i,j);
-                            break;
-                    }
-                }
-            }
-        }
-        
-        
-        
     }
     
     public boolean puzzleResolu(){

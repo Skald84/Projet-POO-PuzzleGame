@@ -69,7 +69,6 @@ public class CaseSymbole extends Case{
     
     private void setCaseImg(){
         if (this.s == symbole.S1) img = "/images/S1.png";
-        if (this.s == symbole.S2) img = "/images/S2.png";
-        
+        if (this.s == symbole.S2) img = "/images/S2.png";    
     }
 }

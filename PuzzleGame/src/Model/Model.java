@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.Observable;
+import javafx.scene.control.Alert;
 
 
 /**
@@ -73,6 +74,10 @@ public class Model extends Observable {
                 chemin.afficheChemin();
                 System.out.println("chemin valide");
                 if(grille.puzzleResolu()){
+                    Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+                                    dialog.setTitle("Bravo !");
+                                    dialog.setHeaderText("Félicitation vous avez réussi le Puzzle");
+                                    dialog.showAndWait();
                     System.out.println("Puzzle Résolu");
                     chemin1.afficheChemin();
                     chemin2.afficheChemin();

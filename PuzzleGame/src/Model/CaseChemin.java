@@ -106,7 +106,7 @@ public class CaseChemin extends Case{
         this.setCaseImg();
     }
     
-    protected void setCaseImg(){
+    public void setCaseImg(){
         if (this.voisin1 == voisin.LIBRE && this.voisin2 == voisin.LIBRE) this.img = "/images/LIBRE.png";
         else if (this.voisin1 == voisin.N && this.voisin2 == voisin.LIBRE) this.img = "/images/N.png";
         else if (this.voisin1 == voisin.E && this.voisin2 == voisin.LIBRE) this.img = "/images/E.png";
