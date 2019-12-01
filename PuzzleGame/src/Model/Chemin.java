@@ -38,9 +38,9 @@ public class Chemin extends LinkedList<Case>{
      *rend les cases libres et vide le chemin
      */
     public void reinitialisation(){
-        for (int i = 0; i < this.size(); i++) {
-            this.get(i).setLibre(true);
-        }
+//        for (int i = 0; i < this.size(); i++) {
+//            this.get(i).setLibre(true);
+//        }
         super.clear();
     }    
    

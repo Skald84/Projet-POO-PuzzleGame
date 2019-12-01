@@ -62,7 +62,6 @@ public class CaseSymbole extends Case{
                 + this.x + ", "
                 + this.y +
                 ", libre : " + this.libre +
-                ", voisin : " + this.voisin1 +
                 ", Symbole : " + this.s +
                 ", image : " + this.img + "].");
     }

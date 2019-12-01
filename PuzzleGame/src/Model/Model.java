@@ -23,7 +23,7 @@ public class Model extends Observable {
     public Grille grille;
     
     /**
-     * Crée un objet grille
+     * CrÃ©e un objet grille
      * @param niveau
      */
     public void creerGrille(String niveau){
@@ -37,7 +37,7 @@ public class Model extends Observable {
     }
     
     /**
-     * crée trois nouveaux chemins
+     * crÃ©e trois nouveaux chemins
      */
     public void creerChemin(){
         this.chemin1 = new Chemin();
@@ -70,15 +70,15 @@ public class Model extends Observable {
     public void stopDD(int c, int r) {
         // ajouter verif reference != sur getFirst et getLast
         if(!(chemin.isEmpty())){ // si chemin non vide 
-            if (chemin.getLast() instanceof CaseSymbole ){ // si dernière case est case symbole
+            if (chemin.getLast() instanceof CaseSymbole ){ // si derniÃ¨re case est case symbole
                 chemin.afficheChemin();
                 System.out.println("chemin valide");
                 if(grille.puzzleResolu()){
                     Alert dialog = new Alert(Alert.AlertType.INFORMATION);
                                     dialog.setTitle("Bravo !");
-                                    dialog.setHeaderText("Félicitation vous avez réussi le Puzzle");
+                                    dialog.setHeaderText("FÃ©licitation vous avez rÃ©ussi le Puzzle");
                                     dialog.showAndWait();
-                    System.out.println("Puzzle Résolu");
+                    System.out.println("Puzzle RÃ©solu");
                     chemin1.afficheChemin();
                     chemin2.afficheChemin();
                 }
@@ -99,7 +99,7 @@ public class Model extends Observable {
                 chemin.afficheChemin();
         }
         
-        // copie le chemin effectué au bon endroit
+        // copie le chemin effectuÃ© au bon endroit
         if (chemin == chemin1) {
                 chemin1 = chemin;
             }else{
@@ -135,44 +135,37 @@ public class Model extends Observable {
             }
             else{//Le chemin n'est pas vide
                 if(casePointee instanceof CaseChemin){
-                    
-                    //------------------------------------------------------------------------FACTORISABLE ?
-                    if(chemin.getLast() instanceof CaseSymbole){
-                        chemin.getLast().setVoisin1(casePointee);
-                    }
-                    else{//la case précédente est une case chemin
-                        CaseChemin CaseCheminPrecedente = (CaseChemin) chemin.getLast(); // on est obligé de précaste en case-chemin !
+                    if(chemin.getLast() instanceof CaseChemin){
+                    //alors la case précédente est avoisiné à la case pointée
+                        CaseChemin CaseCheminPrecedente = (CaseChemin) chemin.getLast();
                         CaseCheminPrecedente.setVoisin2(casePointee);
                     }
-                    casePointee.setVoisin1(chemin.getLast());
+                    //la case pointée est avoisinée à la case précédente
+                    CaseChemin caseCheminPointee = (CaseChemin) casePointee;
+                    caseCheminPointee.setVoisin1(chemin.getLast());
                     chemin.addLast(casePointee);
-                    //------------------------------------------------------------------------
                 }
-                else{//la case pointée est une case symbole, et donc potentiellement nbColonnes derniere du chemin
-                    CaseSymbole caseSymbolePointee = (CaseSymbole)casePointee; // on est obligé de précaste en case-symbole !
-                    CaseSymbole caseSymboleInitiale = (CaseSymbole)chemin.getFirst(); // on est obligé de précaste en case-symbole !
+                
+                else{//la case pointÃ©e est une case symbole, et donc potentiellement la derniere du chemin
+                    CaseSymbole caseSymbolePointee = (CaseSymbole)casePointee;
+                    CaseSymbole caseSymboleInitiale = (CaseSymbole)chemin.getFirst();
+                    
                     if(caseSymbolePointee.getSymbole() == caseSymboleInitiale.getSymbole()){
-                        //------------------------------------------------------------------------FACTORISABLE ?
-                        if(chemin.getLast() instanceof CaseSymbole){
-                            chemin.getLast().setVoisin1(casePointee);
-                        }
-                        else{//la case précédente est une case chemin
-                            CaseChemin CaseCheminPrecedente = (CaseChemin) chemin.getLast(); // on est obligé de précaste en case-chemin !
+                        if(chemin.getLast() instanceof CaseChemin){
+                            CaseChemin CaseCheminPrecedente = (CaseChemin) chemin.getLast(); // on est obligÃ© de prÃ©caste en case-chemin !
                             CaseCheminPrecedente.setVoisin2(casePointee);
                         }
-                        casePointee.setVoisin1(chemin.getLast());
                         chemin.addLast(casePointee);
-                        //------------------------------------------------------------------------
                     }
                     else{
-                        System.out.println("La première et cette case n'ont pas le même symbole !");
+                        System.out.println("La premiÃ¨re et cette case n'ont pas le mÃªme symbole !");
                         reinitialisation(chemin);
                     }
                 }
             }
         }
-        else{//la case est déjà affectée à une chemin
-            System.out.println("La case est déjà affectée à un chemin !");
+        else{//la case est dÃ©jÃ  affectÃ©e Ã  un chemin
+            System.out.println("La case est dÃ©jÃ  affectÃ©e Ã  un chemin !");
             reinitialisation(chemin);
         }
         chemin.afficheChemin();
@@ -188,11 +181,25 @@ public class Model extends Observable {
     }
     
     private void reinitialisation(Chemin chemin){
+        System.out.println("reinit...");
+        
         for(Case i : chemin){
-            i.setLibre(true);
+            System.out.println(i.toString());
+            if(i instanceof CaseChemin){
+                CaseChemin cI = (CaseChemin)i;
+                cI.setLibre(true);
+                System.out.println(cI.toString());
+            }
+            else{
+                i.setLibre(true);
+                System.out.println(i.toString());
+            }
+                        
             setChanged();
             notifyObservers(i);
         }
+        
+        System.out.println("fin reinit chemin");
         chemin.reinitialisation();
     }
 }

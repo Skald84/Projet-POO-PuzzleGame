@@ -15,7 +15,8 @@ package Model;
      *          1.0
      */
 public class CaseChemin extends Case{
-
+    
+    protected voisin voisin1;
     private voisin voisin2;
     
     /** Ce constructeur créé une case chemin à partir de ses position en x et en y
@@ -40,7 +41,11 @@ public class CaseChemin extends Case{
     
     @Override
     protected void setLibre(boolean libre) {
-        this.libre = libre;
+        super.setLibre(libre);
+        if(libre){
+            this.voisin1 = voisin.LIBRE;
+            this.voisin2 = voisin.LIBRE;
+        }
         this.setCaseImg();
     }
     
@@ -55,8 +60,19 @@ public class CaseChemin extends Case{
                 ", voisin2 : " + this.voisin2 +
                 ", image : " + this.img + "].");
     }
-    
-    @Override
+
+    /**
+    * Cette méthode permet de déterminer le voisinage (premier dans le cas d'une CaseChemin) d'une Case par rapport à une autre
+    * 
+    * @authors
+    *          G.FERRAND & A.TOUCHE
+    * @param c
+    *          La case qui sera comparé à l'objet pour déterminé son voisinage 
+    * @version
+    *          1.0
+    * @since
+    *          1.0
+    */
     protected void setVoisin1(Case c){
         if (this.estVoisinParLeNord(c)){
             this.voisin1 = voisin.N;
@@ -70,6 +86,11 @@ public class CaseChemin extends Case{
         else if (this.estVoisinParLOuest(c)){
             this.voisin1 = voisin.O;
         }
+        else {
+            this.voisin1 = voisin.LIBRE;
+        }
+        System.out.println(this.voisin1);
+        
         this.setCaseImg();
     }
     
@@ -118,6 +139,101 @@ public class CaseChemin extends Case{
         else if ((this.voisin1 == voisin.E && this.voisin2 == voisin.S) || (this.voisin1 == voisin.S && this.voisin2 == voisin.E)) this.img = "/images/ES.png";
         else if ((this.voisin1 == voisin.E && this.voisin2 == voisin.O) || (this.voisin1 == voisin.O && this.voisin2 == voisin.E)) this.img = "/images/EO.png";
         else if ((this.voisin1 == voisin.S && this.voisin2 == voisin.O) || (this.voisin1 == voisin.O && this.voisin2 == voisin.S)) this.img = "/images/SO.png";
-        else this.img = "/images/ERREUR.png";
+        else this.img = "/images/ERREUR.png";//si voisin1 est libre et voisins2 ne l'est pas par exemple...
+    }
+    
+        /**
+     * Cette méthode permet de déterminer si l'objet est voisin par rapport à une autre Case
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param c
+     *          La case qui sera comparé à l'objet pour déterminé son éventuel voisinage
+     * @return
+     *          Un booléen, en fonction de la véracité de la proposition
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
+    protected boolean estVoisinDe(Case c){
+        
+        return this.estVoisinParLeNord(c) || this.estVoisinParLEst(c) || this.estVoisinParLeSud(c) || this.estVoisinParLOuest(c);
+    }
+    
+    /**
+     * Cette méthode permet de déterminer si l'objet est voisin par le Nord par rapport à une autre Case
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param c2
+     *          La case qui sera comparé à l'objet pour déterminé son éventuel voisinage par le Nord
+     * @return
+     *          Un booléen, en fonction de la véracité de la proposition
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
+    protected boolean estVoisinParLeNord(Case c2){
+        return x == c2.getX() && y-1 == c2.getY();
+    }
+    
+    /**
+     * Cette méthode permet de déterminer si l'objet est voisin par l'Est par rapport à une autre Case
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param c2
+     *          La case qui sera comparé à l'objet pour déterminé son éventuel voisinage par l'Est
+     * @return
+     *          Un booléen, en fonction de la véracité de la proposition
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
+    protected boolean estVoisinParLEst(Case c2){
+        return x+1 == c2.getX() && y == c2.getY();
+    }
+    
+    /**
+     * Cette méthode permet de déterminer si l'objet est voisin par le Sud par rapport à une autre Case
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param c2
+     *          La case qui sera comparé à l'objet pour déterminé son éventuel voisinage par le Sud
+     * @return
+     *          Un booléen, en fonction de la véracité de la proposition
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
+    protected boolean estVoisinParLeSud(Case c2){
+        return x == c2.getX() && y+1 == c2.getY();
+    }
+
+    /**
+     * Cette méthode permet de déterminer si l'objet est voisin par l'Ouest par rapport à une autre Case
+     * 
+     * @authors
+     *          G.FERRAND & A.TOUCHE
+     * @param c2
+     *          La case qui sera comparé à l'objet pour déterminé son éventuel voisinage par l'Ouest
+     * @return
+     *          Un booléen, en fonction de la véracité de la proposition
+     * @version
+     *          1.0
+     * @since
+     *          1.0
+     */
+    protected boolean estVoisinParLOuest(Case c2){
+        return x-1 == c2.getX() && y == c2.getY();
+    }
+    
+        protected enum voisin {
+        LIBRE, N, E, S, O
     }
 }
