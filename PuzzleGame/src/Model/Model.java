@@ -70,32 +70,36 @@ public class Model extends Observable {
      */
     public void stopDD(int c, int r) {
         // ajouter verif reference != sur getFirst et getLast
+        String prompt="";
+        
         if(!(chemin.isEmpty())){ // si chemin non vide 
             if (chemin.getLast() instanceof CaseSymbole ){ // si derniÃ¨re case est case symbole
                 chemin.afficheChemin();
-                System.out.println("chemin valide");
+                prompt = "\nchemin valide";
                 if(grille.puzzleResolu()){
                     Alert dialog = new Alert(Alert.AlertType.INFORMATION);
                                     dialog.setTitle("Bravo !");
                                     dialog.setHeaderText("FÃ©licitation vous avez rÃ©ussi le Puzzle");
                                     dialog.showAndWait();
-                    System.out.println("Puzzle RÃ©solu");
+                    
+                    prompt = "\nPuzzle résolu";
                     chemin1.afficheChemin();
                     chemin2.afficheChemin();
                 }
                 else{
-                    System.out.println("Des cases sont encore vides !");
+                    prompt = "\nDes cases sont encore vides !";
+                    
                     chemin1.afficheChemin();
                     chemin2.afficheChemin();
                 }
             } else {
-                System.out.println("chemin non valide");
+                prompt = "\nchemin non valide";
                 reinitialisation(chemin);
                 chemin1.afficheChemin();
                 chemin2.afficheChemin();
             }
         } else{
-            System.out.println("chemin non valide (chemin vide)");
+                prompt = "\nchemin non valide (chemin vide)";
                 reinitialisation(chemin);
                 chemin.afficheChemin();
         }
@@ -108,6 +112,9 @@ public class Model extends Observable {
             }
         
         System.out.println("stopDD : " + c + "-" + r + " -> " + lastC + "-" + lastR);
+        setChanged();
+        
+        notifyObservers(prompt);
     }
     
     /**
