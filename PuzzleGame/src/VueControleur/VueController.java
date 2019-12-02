@@ -53,7 +53,7 @@ public class VueController extends Application implements Observer{
             Group accueil = new Group();
             Scene sceneAccueil = new Scene(accueil, 900, 900);
             BorderPane ecranAccueil = new BorderPane();
-            ecranAccueil.setPrefSize(800, 800);
+            ecranAccueil.setPrefSize(900, 900);
             accueil.getChildren().add(ecranAccueil);
 
             // Titre
@@ -166,12 +166,11 @@ public class VueController extends Application implements Observer{
             Scene sceneJeu = new Scene(jeu, 900, 900);
             primaryStage.setScene(sceneJeu);
             BorderPane ecranJeu = new BorderPane();
-            ecranJeu.setPrefSize(800, 800);
+            ecranJeu.setPrefSize(900, 900);
             jeu.getChildren().add(ecranJeu);
             
                        
             Text titre = new Text("Puzzle niveau" + niveauChoisi);
-            titre.setStyle("-fx-background-color:yellow;");
             titre.setFont(new Font("Footlight MT Light",70));
             
             BorderPane.setAlignment(titre,Pos.BOTTOM_CENTER);
@@ -183,7 +182,7 @@ public class VueController extends Application implements Observer{
             VBox node = new VBox();
             node.getChildren().add(grilleVue);
             node.setAlignment(Pos.CENTER);
-            BorderPane.setMargin(node,new Insets(30, 30, 30, 200));
+            BorderPane.setMargin(node,new Insets(30, 30, 30, 250));
             BorderPane.setAlignment(node, Pos.CENTER);
             ecranJeu.setCenter(node);
             
@@ -199,8 +198,9 @@ public class VueController extends Application implements Observer{
                                                 Alert dialog = new Alert(AlertType.INFORMATION);
                                                 dialog.setTitle("Règles du jeu");
                                                 dialog.setHeaderText("Les règles sont les suivantes:\n"+"\t\t- Vous devez relier chaque paire de symbole\n" 
-                                                                     + "\t\t- Chaque case doit être utilisée\n" +"\t\t- Les chemins ne peuvent pas se croiser\n\n\n"
-                                                                     + "\t\t\t\t\tBonne chance !");
+                                                                     + "\t\t- Chaque case doit être utilisée\n" +"\t\t- Les chemins ne peuvent pas se croiser\n\n");
+                                                dialog.setContentText("Vous pouvez demander de l'aide en cliquant sur \"aidez moi\", un chemin apparaitra tant que vous maintenez le clic !\n\n\n"+ 
+                                                                      "\t\t\t\t\tBonne chance !");
                                                 dialog.show();
                                              });
             // Bouton retour page accueil
@@ -224,7 +224,7 @@ public class VueController extends Application implements Observer{
 
             // Menu regroupant les deux boutons
             VBox options = new VBox();
-            options.getChildren().addAll(btnAide,btnRègles,btnRetourAccueil);
+            options.getChildren().addAll(btnRègles,btnAide,btnRetourAccueil);
             options.setAlignment(Pos.CENTER);
             options.setSpacing(40);
             options.setPadding(new Insets(0, 0, 50, 0));
