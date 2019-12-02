@@ -10,16 +10,19 @@ import Model.Model;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.application.Application;
+import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -34,6 +37,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /**
@@ -45,15 +49,17 @@ public class VueController extends Application implements Observer{
     GridPane grille;
     ImageView[][] ConteneurImageCase;
     String niveauChoisi="";
+    Text txtPrompt;
+    public String prompt ="";
     
     @Override
     public void start(Stage primaryStage) {
         
         //Gestion ecranJeu d'accueil
             Group accueil = new Group();
-            Scene sceneAccueil = new Scene(accueil, 900, 900);
+            Scene sceneAccueil = new Scene(accueil, 900, 1000);
             BorderPane ecranAccueil = new BorderPane();
-            ecranAccueil.setPrefSize(900, 900);
+            ecranAccueil.setPrefSize(900, 1000);
             accueil.getChildren().add(ecranAccueil);
 
             // Titre
@@ -65,6 +71,7 @@ public class VueController extends Application implements Observer{
                 // Label
                 Label choixNiveau = new Label("Niveau");
                 choixNiveau.setFont(new Font("Century Gothic",30));
+                
 
                 // ComboBox
                 ComboBox listeNiveaux = new ComboBox();
@@ -140,7 +147,8 @@ public class VueController extends Application implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         
-        //on récupère le second argument ("arg"), qu'on cast en case, pour enfin récuperer ses coordonnées
+        if (arg instanceof Case) {
+            //on récupère le second argument ("arg"), qu'on cast en case, pour enfin récuperer ses coordonnées
         //le premier argument, "o",  est l'observable, ici "model")
         Case c = (Case) arg;
         int x = c.getX();
@@ -151,22 +159,28 @@ public class VueController extends Application implements Observer{
         //Gridpane + tableau d'image, est ce vraiment nécessaire ?
         String pathCaseImg = c.getImage();
         ConteneurImageCase[x][y].setImage(new Image(VueController.class.getResourceAsStream(pathCaseImg)));
-       
+        } else if (arg instanceof String){
+            
+           prompt =  arg + prompt;
+            
+           txtPrompt.setText((String) prompt);
+        }
     }
     
     public void lancerPartie(Stage primaryStage, String niveauChoisi){
         
         //Initialisation de la fenêtre principale
+        prompt ="";
         
             //Instanciation du modèle
             Model m = new Model();
             m.addObserver(this); // Obervation du modèle par la vue
 
             Group jeu = new Group();
-            Scene sceneJeu = new Scene(jeu, 900, 900);
+            Scene sceneJeu = new Scene(jeu, 900, 1000);
             primaryStage.setScene(sceneJeu);
             BorderPane ecranJeu = new BorderPane();
-            ecranJeu.setPrefSize(900, 900);
+            ecranJeu.setPrefSize(900, 1000);
             jeu.getChildren().add(ecranJeu);
             
                        
@@ -187,7 +201,18 @@ public class VueController extends Application implements Observer{
             ecranJeu.setCenter(node);
             
             
-           
+            // Text Label Prompt
+            txtPrompt = new Text("Bonne chance !!!");
+            txtPrompt.setTextAlignment(TextAlignment.CENTER);
+            ScrollPane scroll = new ScrollPane(txtPrompt);
+            scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+            scroll.setMaxHeight(100);
+            scroll.setMaxWidth(300);
+            scroll.setMinHeight(100);
+            scroll.setMinWidth(300);
+            
+            
+   
             
             // Bouton affichage des règles
             Button btnRègles = new Button("Règles du jeu");
@@ -219,14 +244,22 @@ public class VueController extends Application implements Observer{
             btnAide.setOnMousePressed(e -> m.aide(niveauChoisi));
             btnAide.setOnMouseReleased(e -> m.reinitialisationCheminAide());
             
+            // Bouton réinitialiser grille
+            Button btnReinit = new Button("Réinitialiser");
+            btnReinit.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-border-radius: 5px;-fx-background-color:#1F2AFF;-fx-text-fill: white;");
+            btnReinit.setOnMouseEntered(e -> btnReinit.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-background-color:white;-fx-text-fill: #1F2AFF;"));
+            btnReinit.setOnMouseExited(e -> btnReinit.setStyle("-fx-font-size: 15px;-fx-font-family: \"Century Gothic\";-fx-background-color:#1F2AFF;-fx-text-fill: white;"));
+            btnReinit.setOnMouseClicked(e-> lancerPartie(primaryStage, niveauChoisi));
+            
+            
             
 
 
             // Menu regroupant les deux boutons
             VBox options = new VBox();
-            options.getChildren().addAll(btnRègles,btnAide,btnRetourAccueil);
+            options.getChildren().addAll(scroll,btnRègles,btnAide,btnReinit,btnRetourAccueil);
             options.setAlignment(Pos.CENTER);
-            options.setSpacing(40);
+            options.setSpacing(25);
             options.setPadding(new Insets(0, 0, 50, 0));
             BorderPane.setAlignment(options, Pos.TOP_CENTER);
             ecranJeu.setBottom(options);
