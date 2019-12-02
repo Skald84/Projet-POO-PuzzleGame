@@ -79,7 +79,7 @@ public class Model extends Observable {
                 if(grille.puzzleResolu()){
                     Alert dialog = new Alert(Alert.AlertType.INFORMATION);
                                     dialog.setTitle("Bravo !");
-                                    dialog.setHeaderText("FÃ©licitation vous avez rÃ©ussi le Puzzle");
+                                    dialog.setHeaderText("Félicitation vous avez réussi le Puzzle");
                                     dialog.showAndWait();
                     
                     prompt = "\nPuzzle résolu";
@@ -143,15 +143,20 @@ public class Model extends Observable {
             }
             else{//Le chemin n'est pas vide
                 if(casePointee instanceof CaseChemin){
-                    if(chemin.getLast() instanceof CaseChemin){
-                    //alors la case précédente est avoisiné à la case pointée
-                        CaseChemin CaseCheminPrecedente = (CaseChemin) chemin.getLast();
-                        CaseCheminPrecedente.setVoisin2(casePointee);
+                    if(((CaseChemin) casePointee).estVoisinDe(chemin.getLast())){
+                        if(chemin.getLast() instanceof CaseChemin){
+                        //alors la case précédente est avoisiné à la case pointée
+                            CaseChemin CaseCheminPrecedente = (CaseChemin) chemin.getLast();
+                            CaseCheminPrecedente.setVoisin2(casePointee);
+                        }
+                        //la case pointée est avoisinée à la case précédente
+                        CaseChemin caseCheminPointee = (CaseChemin) casePointee;
+                        caseCheminPointee.setVoisin1(chemin.getLast());
+                        chemin.addLast(casePointee);                    }
+                    else{
+                        System.out.println("Alors comme ca on tente de tricher ?!");
+                        reinitialisation(chemin);
                     }
-                    //la case pointée est avoisinée à la case précédente
-                    CaseChemin caseCheminPointee = (CaseChemin) casePointee;
-                    caseCheminPointee.setVoisin1(chemin.getLast());
-                    chemin.addLast(casePointee);
                 }
                 
                 else{//la case pointÃ©e est une case symbole, et donc potentiellement la derniere du chemin
@@ -166,14 +171,14 @@ public class Model extends Observable {
                         chemin.addLast(casePointee);
                     }
                     else{
-                        System.out.println("La premiÃ¨re et cette case n'ont pas le mÃªme symbole !");
+                        System.out.println("La première et cette case n'ont pas le même symbole !");
                         reinitialisation(chemin);
                     }
                 }
             }
         }
         else{//la case est dÃ©jÃ  affectÃ©e Ã  un chemin
-            System.out.println("La case est dÃ©jÃ  affectÃ©e Ã  un chemin !");
+            System.out.println("La case est déjà  affectée Ã  un chemin !");
             reinitialisation(chemin);
         }
         chemin.afficheChemin();
