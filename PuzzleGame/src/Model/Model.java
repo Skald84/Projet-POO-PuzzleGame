@@ -20,6 +20,7 @@ public class Model extends Observable {
     private Chemin chemin;
     private Chemin chemin1;
     private Chemin chemin2;
+    private Chemin cheminAide;
     public Grille grille;
     
     /**
@@ -202,4 +203,40 @@ public class Model extends Observable {
         System.out.println("fin reinit chemin");
         chemin.reinitialisation();
     }
+    
+    public void aide(String niveau){
+        cheminAide = new Chemin();
+        cheminAide.aide(niveau);
+        
+        for(Case i : cheminAide){
+                    
+            setChanged();
+            notifyObservers(i);
+        }
+        
+    }
+    
+    public void reinitialisationCheminAide(){
+        System.out.println("reinit...");
+        
+        for(Case i : cheminAide){
+            System.out.println(i.toString());
+            if(i instanceof CaseChemin){
+                CaseChemin cI = (CaseChemin)i;
+                cI.setLibre(true);
+                System.out.println(cI.toString());
+            }
+            else{
+                i.setLibre(true);
+                System.out.println(i.toString());
+            }
+                        
+            setChanged();
+            notifyObservers(i);
+        }
+        
+        System.out.println("fin reinit chemin");
+    }
+    
+ 
 }
