@@ -5,19 +5,21 @@
  */
 package Model;
 
-    /** Représente les cases symboles dans la grille
+    /** 
      * 
-     * @authors
-     *          G.FERRAND & A.TOUCHE
-     * @version
-     *          1.0
-     * @since
-     *          1.0
+     * @authors Gérome FERRAND & Aymeric TOUCHE
      */
+
 public class CaseSymbole extends Case{
     
     private symbole s;
     
+    /**
+     *
+     * @param x
+     * @param y
+     * @param typeSymbole
+     */
     public CaseSymbole(int x, int y, String typeSymbole) {
       super(x, y);
         System.out.println(typeSymbole);
@@ -34,18 +36,10 @@ public class CaseSymbole extends Case{
         System.out.println(this.s);
       setCaseImg();
     }
-      
-      /**
-     * Cette méthode permet d'accéder au symbole de l'objet
-     * 
-     * @authors
-     *          G.FERRAND & A.TOUCHE
-     * @return
-     *          Le symbole de l'objet
-     * @version
-     *          1.0
-     * @since
-     *          1.0
+
+    /**
+     * Permet d'accéder au symbole de l'objet
+     * @return s
      */
     protected symbole getSymbole(){
         return this.s;
@@ -62,6 +56,10 @@ public class CaseSymbole extends Case{
                 ", image : " + this.img + "].");
     }
     
+    /**
+     * 
+     * Donne le chemin de l'image
+     */
     private void setCaseImg(){
         if (this.s == symbole.S1) img = "/images/S1.png";
         if (this.s == symbole.S2) img = "/images/S2.png";    

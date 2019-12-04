@@ -96,17 +96,7 @@ public class CaseChemin extends Case{
     
     /**
      * Cette méthode permet de déterminer le second voisinage d'une CaseChemin
-     * 
-     * @authors
-     *          G.FERRAND & A.TOUCHE
-     * @param c
-     *          La case qui sera comparé à l'objet pour déterminé le second voisinage d'une case chemin
-     * @version
-     *          1.0
-     * @since
-     *          1.0
-     * @see
-     *          Case.setVoisin1() pour plus de détails sur la méthode
+     * @param c La case qui sera comparé à l'objet pour déterminé le second voisinage d'une case chemin
      */
     protected void setVoisin2(Case c){
         if(this.estVoisinParLeNord(c)){
@@ -233,7 +223,34 @@ public class CaseChemin extends Case{
         return x-1 == c2.getX() && y == c2.getY();
     }
     
+    /**
+     *
+     */
     protected enum voisin {
-        LIBRE, N, E, S, O
+
+        /**
+         *
+         */
+        LIBRE,
+
+        /**
+         *
+         */
+        N,
+
+        /**
+         *
+         */
+        E,
+
+        /**
+         *
+         */
+        S,
+
+        /**
+         *
+         */
+        O
     }
 }

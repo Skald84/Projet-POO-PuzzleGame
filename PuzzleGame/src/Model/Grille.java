@@ -5,17 +5,19 @@
  */
 package Model;
 
-import java.util.Observable;
-
 /**
  *
- * @author et8ge
+ * @author Gérome FERRAND & Aymeric TOUCHE
  */
 
-public class Grille extends Observable{
+public class Grille{
     
     int nbLignes;
     int nbColonnes;
+
+    /**
+     *
+     */
     public Case[][] plateauJeu;
     private final String [][] patron1 = {   {"S1","CC","CC","CC"},
                                             {"S2","CC","CC","CC"},
@@ -115,6 +117,10 @@ public class Grille extends Observable{
         }
     }
     
+    /**
+     * Vérifie si toute les cases sont occupées
+     * @return
+     */
     public boolean puzzleResolu(){
         for(int i =0 ; i < nbLignes ; i++){
             for(int j =0 ; j < nbColonnes ; j++){
@@ -124,10 +130,18 @@ public class Grille extends Observable{
         return true;
     }
     
+    /**
+     * 
+     * @return nbLignes
+     */
     public int getLo(){
         return this.nbLignes;
     }
     
+    /**
+     *
+     * @return nbColonnes
+     */
     public int getLa(){
         return this.nbColonnes;
     }
